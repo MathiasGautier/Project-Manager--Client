@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import apiHandler from "../services/apiHandler";
-import { AuthContext } from "../Auth/AuthContext";
+import { AuthContext } from "../auth/AuthContext";
 
 function Register(props) {
   const [user, setUser] = useState({
