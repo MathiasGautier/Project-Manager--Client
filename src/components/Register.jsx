@@ -19,18 +19,13 @@ function Register(props) {
     };
   }, []);
 
-  useEffect(() => {
-    if (authContext.isAuthenticated) {
-      props.history.push("/");
-    }
-  });
+ 
 
   const login = () => {
     apiHandler
       .login(user)
       .then((data) => {
         const { isAuthenticated, user } = data;
-        console.log(data);
         authContext.setUser(user);
         authContext.setIsAuthenticated(isAuthenticated);
       })
@@ -52,7 +47,6 @@ function Register(props) {
     apiHandler
       .register(user)
       .then((data) => {
-        console.log(data);
         resetForm();
         setMessage("yes");
         timerID = setTimeout(() => {
@@ -71,56 +65,52 @@ function Register(props) {
   };
 
   return (
-    <div className="container-fluid mt-5 ">
+    <div className="auth-wrapper">
       <form onSubmit={onSubmit}>
-        <h3>Please enter your informations</h3>
-        <label htmlFor="username" className="sr-only">
-          Username :
-        </label>
-        <input
-          type="text"
-          name="username"
-          value={user.username}
-          onChange={onChange}
-          className="form-control"
-          placeholder="Enter user name"
-        />
-        <label htmlFor="password" className="sr-only">
-          Password :
-        </label>
-        <input
-          type="password"
-          name="password"
-          value={user.password}
-          onChange={onChange}
-          className="form-control"
-          placeholder="Enter password"
-        />
-        {/* <label htmlFor="role" className="sr-only">
-          Role :
-        </label>
-        <input
-          type="text"
-          name="role"
-          value={user.role}
-          onChange={onChange}
-          className="form-control"
-          placeholder="Enter role (admin/user)"
-        /> */}
-        <button className="btn btn-lg btn-primary btn-block mt-4" type="submit">
+        <h3>Register an account</h3>
+        <div className="form-group">
+          <label htmlFor="username">Username :</label>
+          <input
+            type="text"
+            name="username"
+            value={user.username}
+            onChange={onChange}
+            className="form-control"
+            placeholder="Enter user name"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password :</label>
+          <input
+            type="password"
+            name="password"
+            autoComplete="on"
+            value={user.password}
+            onChange={onChange}
+            className="form-control"
+            placeholder="Enter password"
+          />
+        </div>
+
+        {message === "yes" ? (
+          <div className="alert alert-success text-center mt-2" role="alert">
+            Account successfully created !
+          </div>
+        ) : null}
+        {message === "no" ? (
+          <div className="alert alert-danger text-center mt-2" role="alert">
+            We couldn't create your account... please verify your informations.
+          </div>
+        ) : null}
+        <button className="btn btn-lg btn-primary btn-block" type="submit">
           Register
         </button>
+        <p className="text-right mt-2">
+          <button className="btn btn-link" onClick={props.backToLoginBtn}>
+            Allready ave an account ?
+          </button>
+        </p>
       </form>
-      {message === "yes" ? (
-        <div className="alert alert-success text-center" role="alert">
-          Account successfully created !
-        </div>
-      ) : null}
-      {message === "no" ? (
-        <div className="alert alert-danger text-center" role="alert">
-          We couldn't create your account... please verify your informations.
-        </div>
-      ) : null}
     </div>
   );
 }

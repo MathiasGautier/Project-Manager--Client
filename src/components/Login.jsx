@@ -1,12 +1,13 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import apiHandler from "../services/apiHandler";
 import { AuthContext } from "../auth/AuthContext";
+import { useHistory} from 'react-router-dom';
 
 function Login(props) {
   const [user, setUser] = useState({ username: "", password: "" });
   const [message, setMessage] = useState(false);
   let timerID = useRef(null);
-
+  const history=useHistory();
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
@@ -15,11 +16,7 @@ function Login(props) {
     };
   }, []);
 
-  useEffect(() => {
-    if (authContext.isAuthenticated) {
-      props.history.push("/");
-    }
-  });
+
 
   const onChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -28,6 +25,8 @@ function Login(props) {
   const resetForm = () => {
     setUser({ username: "", password: "" });
   };
+
+
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -40,7 +39,7 @@ function Login(props) {
         timerID = setTimeout(() => {
           authContext.setUser(user);
           authContext.setIsAuthenticated(isAuthenticated);
-          props.history.push("/");
+          history.push('/dashboard')
         }, 2000);
       })
       .catch((error) => {
@@ -54,13 +53,12 @@ function Login(props) {
   };
 
   return (
-    <div>
-      <div className="container-fluid mt-5 ">
-        <form onSubmit={onSubmit}>
-          <h3>Please sign in</h3>
-          <label htmlFor="username" className="sr-only">
-            Username :
-          </label>
+    <div className="auth-wrapper">
+      <form onSubmit={onSubmit}>
+        <h3>Sign in</h3>
+
+        <div className="form-group">
+          <label htmlFor="username">Username :</label>
           <input
             type="text"
             name="username"
@@ -69,35 +67,38 @@ function Login(props) {
             className="form-control"
             placeholder="Enter user name"
           />
-          <label htmlFor="password" className="sr-only">
-            Password :
-          </label>
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password :</label>
           <input
             type="password"
             name="password"
+            autoComplete="on"
             value={user.password}
             onChange={onChange}
             className="form-control"
             placeholder="Enter password"
           />
-          <button
-            className="btn btn-lg btn-primary btn-block mt-4"
-            type="submit"
-          >
-            Log in
-          </button>
-        </form>
+        </div>
         {message === "yes" ? (
-          <div className="alert alert-success text-center" role="alert">
-            Welcome {authContext.user.username} !
+          <div className="alert alert-success text-center mt-2" role="alert">
+            Welcome !
           </div>
         ) : null}
         {message === "no" ? (
-          <div className="alert alert-danger text-center" role="alert">
+          <div className="alert alert-danger text-center mt-2" role="alert">
             Wrong username or password. Please try again or register a account.
           </div>
         ) : null}
-      </div>
+        <button className="btn btn-primary btn-lg btn-block" type="submit">
+          Submit
+        </button>
+        <p className="text-right mt-2">
+          <button className="btn btn-link" onClick={props.createAccountBtn}>
+            Or create an account
+          </button>
+        </p>
+      </form>
     </div>
   );
 }

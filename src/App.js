@@ -1,25 +1,25 @@
 import React from "react";
-import Home from "./pages/Home";
-import Login from "./components/Login";
-import NewTask from "./components/New_task";
-import Register from "./components/Register";
-import Navbar from './components/Navbar';
+import Landing from "./views/Landing";
+import Tasks from './components/Tasks'
 import PrivateRoute from "./HOC/PrivateRoute";
+import './style.scss';
 
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
+import 'jquery/dist/jquery';
+import 'bootstrap/dist/js/bootstrap';
+import 'popper.js';
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import Dashboard from "./views/Dashboard";
+import UnPrivateRoute from "./HOC/UnPrivateRoute"
 
 function App() {
+  
   return (
-    <div className="container mt-4">
     <Router>
-    <Navbar />
-      <Route exact path="/" component={Home} />
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/register" component={Register} />
-      <PrivateRoute exact path="/new-task" roles={["user", "admin"]} component={NewTask} />
+      <Route exact path="/" component={Landing} />
+      <PrivateRoute exact path="/dashboard" roles={["user", "admin"]} component={Dashboard} />
+      <PrivateRoute exact path="/tasks" roles={["user", "admin"]} component={Tasks} />
     </Router>
-    </div>
   );
 }
 
