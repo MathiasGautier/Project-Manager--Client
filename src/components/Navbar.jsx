@@ -28,9 +28,10 @@ function Navbar(props) {
     });
   };
 
+
   return (
     <div className="container-fluid navBar">
-      <nav class="navbar navbar-expand-lg navbar-light navBar row bg-nav">
+      <nav className="navbar navbar-expand-lg navbar-light navBar row bg-nav">
         <svg
           width="80"
           height="80"
@@ -44,13 +45,13 @@ function Navbar(props) {
           />
         </svg>
         <div
-          class="align-self-center text-secondary display-4 title mb-2"
+          className="align-self-center text-secondary display-4 title mb-2"
           href="#"
         >
           Manager
         </div>
         <button
-          class="navbar-toggler toggleNav"
+          className="navbar-toggler toggleNav"
           type="button"
           data-toggle="collapse"
           data-target="#navbarSupportedContent"
@@ -58,26 +59,30 @@ function Navbar(props) {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav mr-auto">
             <div className="navItems ml-4 mt-2">
               <div className="d-sm-inline-flex ">
-                <li className="nav-item mr-3">
-                  <NavLink className="flex-sm-fill nav-link" to="/new-task">
-                    New Project
-                  </NavLink>
-                </li>
-                <li class="nav-item">
-                  <NavLink className="flex-sm-fill nav-link" to="/tasks">
+                <li className="nav-item">
+                  <div 
+                  className={`flex-sm-fill nav-link cursor ${props.toggleTasks ? `active` : null}`} 
+                  onClick={props.handleCurrentProject}>
                     Current Projects
-                  </NavLink>
+                  </div>
+                </li>
+                <li className="nav-item mr-3">
+                  <div
+                  className= {`flex-sm-fill nav-link cursor ${props.toggleTasks===false ? `active` : null}`}
+                  onClick={props.handleNewProject}>
+                    New Project
+                  </div>
                 </li>
               </div>
               <div className="d-sm-inline-flex test">
-                <li class="nav-item">
+                <li className="nav-item">
                   <a className="flex-sm-fill nav-link disabled" href=" ">
                     Connected as {authContext.user.username}
                   </a>
@@ -99,46 +104,6 @@ function Navbar(props) {
       </nav>
     </div>
 
-    // <>
-    /* <NavLink className="flex-sm-fill text-sm-center nav-link" exact to="/">
-          Home
-        </NavLink>
-
-          <>
-            <NavLink
-              className="flex-sm-fill text-sm-center nav-link"
-              to="/new-task"
-            >
-              New Task
-            </NavLink>
-            <NavLink
-              className="flex-sm-fill text-sm-center nav-link"
-              to="/tasks"
-            >
-              Current Tasks
-            </NavLink>
-            <a
-              className="flex-sm-fill text-sm-center nav-link disabled"
-              href=" "
-            >
-              Connected as {authContext.user.username}
-            </a>
-            <NavLink
-              className="btn btn-danger nav-item nav-lin"
-              exact
-              to="/"
-              onClick={onClickLogoutHandled}
-            >
-              Logout
-            </NavLink> 
-          </>
-      </nav>
-      {message === true ? (
-        <div className="alert alert-success text-center mt-4" role="alert">
-          See you next time !
-        </div>
-      ) : null} 
-    </> */
   );
 }
 
