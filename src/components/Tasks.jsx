@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import apiHandler from "../services/apiHandler";
+import { NavLink } from "react-router-dom";
 
 function Tasks(props) {
   const [todos, setTodos] = useState(undefined);
@@ -15,15 +16,17 @@ function Tasks(props) {
       });
   }, []);
 
-  
-
   return (
     <div>
       {todos &&
         todos.map((todo, index) => {
           return (
             <div key={index}>
-              <h1>{todo.name}</h1>
+              <h1>
+                <NavLink className="nav-link" exact to={`/task/${todo._id}`}>
+                  {todo.name}
+                </NavLink>
+              </h1>
               <h3>{todo.description}</h3>
             </div>
           );

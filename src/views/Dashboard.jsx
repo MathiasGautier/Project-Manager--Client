@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Tasks from "../components/Tasks";
-import New_task from "../components/New_task";
+import NewTask from "../components/NewTask";
 
-function Test() {
-  const [toggleTasks, setToggleTasks] = useState(true)
+function Dashboard() {
+  const [toggleTasks, setToggleTasks] = useState(true);
+
 
   const handleNewProject = () => {
     setToggleTasks(false);
@@ -13,6 +14,8 @@ function Test() {
     setToggleTasks(true);
   };
 
+
+
   return (
     <div className="row">
       <Navbar
@@ -20,9 +23,14 @@ function Test() {
         handleCurrentProject={handleCurrentProject}
         toggleTasks={toggleTasks}
       />
-      {toggleTasks ? <Tasks /> : <New_task />}
+      {toggleTasks ? 
+      <Tasks
+       /> : 
+      <NewTask 
+       handleCurrentProject={handleCurrentProject} 
+      />}
     </div>
   );
 }
 
-export default Test;
+export default Dashboard;

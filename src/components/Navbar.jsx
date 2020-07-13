@@ -93,6 +93,8 @@ function Navbar(props) {
                     exact
                     to="/"
                     onClick={onClickLogoutHandled}
+                    message={message}
+                    isAuthenticated={isAuthenticated}
                   >
                     Logout
                   </NavLink>

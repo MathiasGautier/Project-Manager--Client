@@ -3,11 +3,12 @@ import apiHandler from "../services/apiHandler";
 
 function New_task(props) {
   const [task, setTask] = useState({
-    name: '',
-    description: '',
+    name: "",
+    description: "",
   });
-  const [message, setMessage] = useState(false);
 
+
+  const [message, setMessage] = useState(false);
 
   let timerID = useRef(null);
 
@@ -25,26 +26,26 @@ function New_task(props) {
     setTask({ name: "", description: "" });
   };
 
-  const onSubmit =(e)=>{
-      e.preventDefault();
-    //   if ((task.name.length > 1) && (task.description.length >1))
-      apiHandler
-        .createTodo(task)
-        .then((data)=>{
-            resetForm();
-            setMessage("yes");
-            timerID = setTimeout(() => {
-             props.history.push("/");
+  const onSubmit = (e) => {
+    e.preventDefault();
+    apiHandler
+      .createTodo(task)
+      .then((data) => {
+        resetForm();
+        setMessage("yes");
+        timerID = setTimeout(() => {
+          props.handleCurrentProject();
+          // history.push("/dashboard");
         }, 2000);
       })
-      .catch((error)=>{
-          setMessage("no");
-          timerID = setTimeout(() => {
+      .catch((error) => {
+        setMessage("no");
+        timerID = setTimeout(() => {
           setMessage(false);
         }, 2000);
         console.log(error);
-      });     
-  }
+      });
+  };
 
   return (
     <div className="container-fluid mt-5 ">
@@ -59,7 +60,7 @@ function New_task(props) {
           value={task.name}
           onChange={onChange}
           className="form-control"
-          placeholder="Enter a title"
+          placeholder="Enter a title for your project"
         />
         <label htmlFor="password" className="sr-only">
           Description :
@@ -70,8 +71,12 @@ function New_task(props) {
           value={task.description}
           onChange={onChange}
           className="form-control"
-          placeholder="Enter a description"
+          placeholder="Enter a description for your project"
         />
+
+
+
+
         <button className="btn btn-lg btn-primary btn-block mt-4" type="submit">
           Create the project
         </button>

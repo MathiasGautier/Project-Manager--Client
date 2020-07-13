@@ -60,6 +60,13 @@ export default {
             .catch(errorHandler);
     },
 
+    getUsers(){
+        return service
+            .get("/user/users")
+            .then((res)=>res.data)
+            .catch(errorHandler);
+        },
+
     getTodos() {
         return service
             .get("/todo/todos")
@@ -67,9 +74,9 @@ export default {
             .catch(errorHandler);
     },
 
-    getOneTodo() {
+    getOneTodo(id) {
         return service
-            .get("/todo/:id")
+            .get(`/todo/${id}`)
             .then((res) => res.data)
             .catch(errorHandler)
     },
