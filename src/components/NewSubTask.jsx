@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import apiHander from "../services/apiHandler";
 
-function New_sub_task(props) {
+function NewSubTask(props) {
   const [subTask, setSubTask] = useState({
     name: "",
     description: "",
@@ -22,66 +23,87 @@ function New_sub_task(props) {
     setWorkerNames([...workerNames, oneUserName]);
   };
 
-  console.log(workerNames && workerNames);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const name = subTask.name;
+    const description = subTask.description;
+    const workers = [...new Set(workersId)];
+    const todoParent_id = props.id;
+    const subTodo = { name, description, workers, todoParent_id };
+
+    apiHander
+      .postSubTodo(subTodo)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div>
-      <h4>Tasks</h4>
-      <div>You must create at least one task for your project.</div>
-      <label htmlFor="task-title" className="mr-sm-2">
-        Title :
-      </label>
-      <input
-        type="text"
-        name="name"
-        value={subTask.name}
-        onChange={onChangeSubTask}
-        className="form-control"
-        placeholder="Enter a title"
-      />
+      <form onSubmit={onSubmit}>
+        <h4>Tasks</h4>
+        <div>You must create at least one task for your project.</div>
+        <label htmlFor="task-title" className="mr-sm-2">
+          Title :
+        </label>
+        <input
+          type="text"
+          name="name"
+          value={subTask.name}
+          onChange={onChangeSubTask}
+          className="form-control"
+          placeholder="Enter a title"
+        />
 
-      <label htmlFor="task-title" className="mr-sm-2">
-        Description :
-      </label>
-      <input
-        type="text"
-        name="name"
-        value={subTask.description}
-        onChange={onChangeSubTask}
-        className="form-control"
-        placeholder="You can describe the task here"
-      />
+        <label htmlFor="task-title" className="mr-sm-2">
+          Description :
+        </label>
+        <input
+          type="text"
+          name="description"
+          value={subTask.description}
+          onChange={onChangeSubTask}
+          className="form-control"
+          placeholder="You can describe the task here"
+        />
 
-      <label className="mr-sm-2" htmlFor="inlineFormCustomSelect">
-        Assign people to this task :
-      </label>
-      <select
-        className="custom-select mr-sm-2"
-        id="inlineFormCustomSelect"
-        name="workers"
-        value={workersId}
-        onChange={onChangeWorkers}
-      >
-        <option defaultValue>Choose a user</option>
-        {props.users &&
-          props.users.map((item, index) => {
-            return (
-              <option value={item._id} key={index}>
-                {item.username}
-              </option>
-            );
-          })}
-      </select>
+        <label className="mr-sm-2" htmlFor="inlineFormCustomSelect">
+          Assign people to this task :
+        </label>
+        <select
+          className="custom-select mr-sm-2"
+          id="inlineFormCustomSelect"
+          name="workers"
+          value={""}
+          onChange={onChangeWorkers}
+        >
+          <option defaultValue>Choose a user</option>
+          {props.users &&
+            props.users.map((item, index) => {
+              return (
+                <option value={item._id} key={index}>
+                  {item.username}
+                </option>
+              );
+            })}
+        </select>
 
-      <div>
-        <p>{workerNames && workerNames}</p>
-      </div>
+        <div>
+          {workerNames &&
+            [...new Set(workerNames)].map((name, index) => (
+              <div key={index}>{name}</div>
+            ))}
+        </div>
 
-      <button className="btn btn-lg btn-primary btn-block mt-4" type="submit">
-        Add the task
-      </button>
+        <button className="btn btn-lg btn-primary btn-block mt-4" type="submit">
+          Add the task
+        </button>
+      </form>
     </div>
   );
 }
 
-export default New_sub_task;
+export default NewSubTask;

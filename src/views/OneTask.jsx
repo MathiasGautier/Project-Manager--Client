@@ -41,7 +41,7 @@ function OneTask(props) {
             </>
         }
            <h2>Add tasks</h2>
-           <NewSubTask users={users} />
+           <NewSubTask users={users} id={props.match.params.id} />
         </div>
     )
 }
