@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import apiHandler from "../services/apiHandler";
 import { AuthContext } from "../auth/AuthContext";
+import { useHistory} from 'react-router-dom';
 
 function Register(props) {
   const [user, setUser] = useState({
@@ -9,7 +10,7 @@ function Register(props) {
     role: "user",
   });
   const [message, setMessage] = useState(false);
-
+const history=useHistory();
   const authContext = useContext(AuthContext);
   let timerID = useRef(null);
 
@@ -51,7 +52,7 @@ function Register(props) {
         setMessage("yes");
         timerID = setTimeout(() => {
           login();
-          props.history.push("/");
+          history.push("/dashboard");
         }, 2000);
       })
       .catch((error) => {

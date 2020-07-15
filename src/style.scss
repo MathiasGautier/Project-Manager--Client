@@ -38,6 +38,14 @@ $nav_t1: #e3f2fd;
     cursor:pointer;
 }
 
+.subTaskFrame{
+    border:1px solid red;
+    width:40vw;
+}
+.statusButton{
+    pointer-events: none
+}
+
 @media (min-width: 576px) {
 .navBar{
     height:90px;

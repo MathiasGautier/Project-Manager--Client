@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import apiHander from "../services/apiHandler";
+import apiHandler from "../services/apiHandler";
 
 function NewSubTask(props) {
   const [subTask, setSubTask] = useState({
@@ -25,6 +26,7 @@ function NewSubTask(props) {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
     const name = subTask.name;
     const description = subTask.description;
     const workers = [...new Set(workersId)];
@@ -34,11 +36,26 @@ function NewSubTask(props) {
     apiHander
       .postSubTodo(subTodo)
       .then((data) => {
-        console.log(data);
+        resetForm();
+        props.subTaskSubmitted(data);
+        apiHandler
+          .getSubtodos()
+          .then((data) => {
+            props.setAllSubTodos(data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const resetForm = () => {
+    setSubTask({ name: "", description: "" });
+    setWorkerNames([]);
+    setWorkers([]);
   };
 
   return (

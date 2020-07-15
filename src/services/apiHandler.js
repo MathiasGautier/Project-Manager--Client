@@ -118,21 +118,21 @@ export default {
 
     getSubtodos(){
         return service
-            .get("/todo/subTodos")
+            .get("/todo/subTodos/all")
             .then((res)=>res.data)
             .catch(errorHandler)
     },
 
-    getOneSubTodo(){
+    getOneSubTodo(id){
         return service
-            .get("/todo/subTodos/:id")
+            .get(`/todo/subTodos/${id}`)
             .then((res)=>res.data)
             .catch(errorHandler)
     },
 
-    updateSubTodo(subTodo){
+    updateSubTodo(subTodo, id){
         return service
-            .patch('/todo/subTodos/:id', subTodo)
+            .patch(`/todo/subTodos/${id}`, subTodo)
             .then((res)=>res.data)
             .catch(errorHandler)
     },
@@ -153,7 +153,7 @@ export default {
 
     getComments(){
         return service
-            .get("/todo/comments")
+            .get("/todo/comments/all")
             .then((res)=>res.data)
             .catch(errorHandler)
     },
