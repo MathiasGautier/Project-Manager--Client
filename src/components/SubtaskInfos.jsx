@@ -17,7 +17,6 @@ useEffect(()=>{
     .catch((error)=>{console.log(error)})
 })
   
-  console.log("status", status)
 
   const setToDo = () => {
     const subTodo = { status: "To Do" };

@@ -1,30 +1,33 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useContext, } from "react";
 import apiHandler from "../services/apiHandler";
 import { AuthContext } from "../auth/AuthContext";
 import { NavLink } from "react-router-dom";
 
 function Navbar(props) {
   const authContext = useContext(AuthContext);
-  const { isAuthenticated, setIsAuthenticated, setUser } = useContext(
-    AuthContext
-  );
-  const [message, setMessage] = useState(false);
-  let timerID = useRef(null);
+  // const { isAuthenticated, setIsAuthenticated, setUser } = useContext(
+  //   AuthContext
+  // );
+  // const [message, setMessage] = useState(false);
+  // let timerID = useRef(null);
 
-  useEffect(() => {
-    return () => {
-      clearTimeout(timerID);
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     clearTimeout(timerID);
+  //   };
+  // }, []);
 
   const onClickLogoutHandled = () => {
-    apiHandler.logout().then((data) => {
-      setUser(data.user);
-      setIsAuthenticated(false);
-      setMessage(true);
-      timerID = setTimeout(() => {
-        setMessage(false);
-      }, 3000);
+    apiHandler
+    .logout()
+    .then((data) => {
+      // setUser(data.user);
+      // setIsAuthenticated(false);
+      // setMessage(true);
+      // timerID = setTimeout(() => {
+      //   setMessage(false);
+      // }, 3000);
+      console.log(data)
     });
   };
 
@@ -93,8 +96,6 @@ function Navbar(props) {
                     exact
                     to="/"
                     onClick={onClickLogoutHandled}
-                    // message={message}
-                    // isAuthenticated={isAuthenticated}
                   >
                     Logout
                   </NavLink>

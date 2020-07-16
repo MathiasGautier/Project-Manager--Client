@@ -34,6 +34,8 @@ function OneTask(props) {
       });
   }, []);
 
+
+
   useEffect(() => {
     apiHandler
       .getSubtodos()
@@ -44,6 +46,8 @@ function OneTask(props) {
         console.log(error);
       });
   }, []);
+
+  
 
   useEffect(() => {
     const id = props.match.params.id;
@@ -62,6 +66,8 @@ function OneTask(props) {
       const res = allSubTodos.filter((x) => {
         if (x.todoParent_id._id === task._id) {
           return x;
+        } else {
+          return null;
         }
       });
       setSubTodos(res);
@@ -89,7 +95,7 @@ function OneTask(props) {
             </>
           )}
 
-          <div >
+          <div>
             <OneSubTask
               subTodos={subTodos}
               comments={comments}
@@ -97,7 +103,7 @@ function OneTask(props) {
               users={users}
               setAllSubTodos={setAllSubTodos}
             />
-         </div>
+          </div>
 
           <button onClick={handleToggleNewTask}>
             {toggleNewTask ? <>Cancel</> : <>Create a new task</>}

@@ -137,9 +137,9 @@ export default {
             .catch(errorHandler)
     },
 
-    deleteSubTodo(){
+    deleteSubTodo(id){
         return service
-            .delete("/todo/subTodos/:id")
+            .delete(`/todo/subTodos/${id}`)
             .then((res)=>res.data)
             .catch(errorHandler)
     },
@@ -165,9 +165,16 @@ export default {
             .catch(errorHandler)
     },
 
-    deleteComment(){
+    deleteComment(id){
         return service
-            .delete("/todo/comments/:id")
+            .delete(`/todo/comments/${id}`)
+            .then((res)=>res.data)
+            .catch(errorHandler)
+    },
+
+    deletSubTodoComments(id){
+        return service
+            .delete(`/todo/comments/subTodos/${id}`)
             .then((res)=>res.data)
             .catch(errorHandler)
     }
