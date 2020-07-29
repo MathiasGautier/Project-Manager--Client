@@ -81,9 +81,9 @@ export default {
             .catch(errorHandler)
     },
 
-    updateTodo(todoUpdate){
+    updateTodo(todoUpdate, id){
         return service 
-            .patch("/todo/:id", todoUpdate)
+            .patch(`/todo/${id}`, todoUpdate)
             .then((res) => res.data)
             .catch(errorHandler)
     },
@@ -95,9 +95,9 @@ export default {
             .catch(errorHandler)
     },
 
-    deleteTodo(){
+    deleteTodo(id){
         return service
-            .delete("/todo/:id")
+            .delete(`/todo/${id}`)
             .then((res)=>res.data)
             .catch(errorHandler)
     },
@@ -144,6 +144,13 @@ export default {
             .catch(errorHandler)
     },
 
+    deleteProjectSubtodos(id){
+        return service
+            .delete(`/todo/subTodos/project/${id}`)
+            .then((res)=>res.data)
+            .catch(errorHandler)
+    },
+
     postComment(comment){
         return service
             .post("/todo/comment", comment)
@@ -175,6 +182,13 @@ export default {
     deletSubTodoComments(id){
         return service
             .delete(`/todo/comments/subTodos/${id}`)
+            .then((res)=>res.data)
+            .catch(errorHandler)
+    },
+
+    deleteProjectComments(id){
+        return service
+            .delete(`/todo/comments/todo/${id}`)
             .then((res)=>res.data)
             .catch(errorHandler)
     }

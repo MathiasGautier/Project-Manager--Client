@@ -13,7 +13,7 @@ function OneSubTask(props) {
   };
 
   const handleTaskRemove = (x) => {
-    setToggleMoreInfos(false)
+    setToggleMoreInfos(false);
     apiHandler
       .deletSubTodoComments(x._id)
       .then(() => {
@@ -47,15 +47,8 @@ function OneSubTask(props) {
                 <h4>TITLE: : {x.name}</h4>
                 <p>Status: {x.status}</p>
               </div>
-              <button
-                className="btn btn-danger"
-                // onClick={() => handleTaskRemove(x)}
-                data-toggle="modal"
-                data-target="#removeWarning"
-              >
-                Remove this task
-              </button>
 
+{/* ///---------Modal */}
               <div
                 className="modal fade"
                 id="removeWarning"
@@ -92,6 +85,7 @@ function OneSubTask(props) {
                 </div>
               </div>
             </div>
+
           ))}
       </div>
 
@@ -105,11 +99,20 @@ function OneSubTask(props) {
               subTodo={props.subTodos}
             />
             <Comments
+              projectId={props.projectId}
               comments={props.comments}
               taskClickedId={taskClicked._id}
               setComments={props.setComments}
               users={props.users}
             />
+
+            <button
+              className="btn btn-danger"
+              data-toggle="modal"
+              data-target="#removeWarning"
+            >
+              Remove this task
+            </button>
           </>
         )}
       </div>

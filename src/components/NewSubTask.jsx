@@ -75,7 +75,7 @@ function NewSubTask(props) {
           placeholder="Enter a title"
         />
 
-        <label htmlFor="task-title" className="mr-sm-2">
+        <label htmlFor="task-description" className="mr-sm-2">
           Description :
         </label>
         <input

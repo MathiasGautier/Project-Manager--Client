@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 
 function Tasks(props) {
   const [todos, setTodos] = useState(undefined);
-  
 
   useEffect(() => {
     apiHandler
@@ -17,8 +16,6 @@ function Tasks(props) {
       });
   }, []);
 
- 
- 
 
   return (
     <div>
@@ -27,7 +24,9 @@ function Tasks(props) {
           return (
             <div key={index}>
               <h1>
-                <NavLink className="nav-link" exact to={`/task/${todo._id}`}>
+                <NavLink className="nav-link" exact to={{
+                  pathname:`/task/${todo._id}`
+                  }}>
                   {todo.name}
                 </NavLink>
               </h1>

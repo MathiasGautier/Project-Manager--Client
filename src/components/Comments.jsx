@@ -7,8 +7,6 @@ function Comments(props) {
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState([]);
 
-// console.log("ici", authContext.user._id)
-
   const onChange = (e) => {
     setNewComment(e.target.value);
   };
@@ -18,7 +16,8 @@ function Comments(props) {
     const userRef= authContext.user._id;
     const text = newComment;
     const subTodoParent_id= props.taskClickedId;
-    const comment={userRef, text, subTodoParent_id}
+    const toDoRef=props.projectId;
+    const comment={userRef, text, subTodoParent_id, toDoRef};
     apiHandler
     .postComment(comment)
     .then((data)=>{
