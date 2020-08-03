@@ -30,6 +30,7 @@ $nav_t1: #e3f2fd;
     position:relative;
     right:10px;
 }
+
 .bg-info{
     background-color:darkgrey !important;
 }
@@ -40,6 +41,45 @@ $nav_t1: #e3f2fd;
 
 .statusButton{
     pointer-events: none
+}
+
+.tasks{
+    width:90%;
+    padding:10px;
+}
+.tasksTwo{
+    border-radius:7px;
+    padding-bottom:15px;
+}
+
+.card-head{
+    border-top-left-radius:7px;
+    background-color:#bfdbf0;
+    border-top-right-radius:7px;
+    display:grid;    
+    grid-template-columns:1fr 1fr;      
+}
+.oneProject-header{
+    background-color:#bfdbf0;
+    border-top-left-radius:7px;
+    border-top-right-radius:7px;
+}
+.oneProject-body{
+    margin-top:10px;
+    // background-color:#bfdbf0;
+    border-bottom-left-radius:7px;
+    border-bottom-right-radius:7px;
+}
+.progressCol{
+    background-color:#bfdbf0;
+}
+.toDoCol{
+    background-color:#e3f2fd;
+    border-bottom-left-radius:7px;
+}
+.doneCol{
+    background-color:#e3f2fd;
+    border-bottom-right-radius:7px;
 }
 
 @media (min-width: 576px) {

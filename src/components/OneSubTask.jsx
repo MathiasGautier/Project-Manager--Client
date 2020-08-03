@@ -7,7 +7,8 @@ function OneSubTask(props) {
   const [toggleMoreInfos, setToggleMoreInfos] = useState(false);
   const [taskClicked, setTaskClicked] = useState({});
 
-  const toggleSubTask = (x) => {
+  const toggleSubTask = (x, e) => {
+    e.preventDefault();
     setToggleMoreInfos(true);
     setTaskClicked(x);
   };
@@ -37,18 +38,74 @@ function OneSubTask(props) {
   };
 
   return (
-    <div className="row">
-      <div className="col">
-        <h2>Tasks</h2>
+    <div>
+      <div>
+        <div className="row">
+          <div className="col toDoCol text-center pb-2">
+            <h2 className="mt-2"> To Do</h2>
+            {props.subTodos &&
+              props.subTodos
+                .filter((x) => x.status === "To Do")
+                .map((x) => {
+                  return (
+                    <div key={x._id}>
+                      <button
+                        type="button"
+                        data-toggle="button"
+                        className="btn btn-link"
+                        onClick={(e) => toggleSubTask(x, e)}
+                      >
+                        {x.name}
+                      </button>
+                    </div>
+                  );
+                })}
+          </div>
+          <div className="col progressCol text-center">
+            <h2 className="mt-2">In Progress</h2>
+            {props.subTodos &&
+              props.subTodos
+                .filter((x) => x.status === "In Progress")
+                .map((x, i) => {
+                  return (
+                    <div key={i}>
+                      <button
+                        type="button"
+                        data-toggle="button"
+                        className="btn btn-link"
+                        onClick={(e) => toggleSubTask(x, e)}
+                      >
+                        {x.name}
+                      </button>
+                    </div>
+                  );
+                })}
+          </div>
+          <div className="col doneCol text-center">
+            <h2 className="mt-2"> Done</h2>
+            {props.subTodos &&
+              props.subTodos
+                .filter((x) => x.status === "Done")
+                .map((x, i) => {
+                  return (
+                    <div key={i}>
+                      <button
+                        type="button"
+                        data-toggle="button"
+                        className="btn btn-link"
+                        onClick={(e) => toggleSubTask(x, e)}
+                      >
+                        {x.name}
+                      </button>
+                    </div>
+                  );
+                })}
+          </div>
+        </div>
+
         {props.subTodos &&
           props.subTodos.map((x, i) => (
             <div key={i}>
-              <div className="subTaskFrame" onClick={() => toggleSubTask(x)}>
-                <h4>TITLE: : {x.name}</h4>
-                <p>Status: {x.status}</p>
-              </div>
-
-{/* ///---------Modal */}
               <div
                 className="modal fade"
                 id="removeWarning"
@@ -85,13 +142,12 @@ function OneSubTask(props) {
                 </div>
               </div>
             </div>
-
           ))}
       </div>
 
-      <div className="col">
+      <div className="bg-nav row mt-4">
         {toggleMoreInfos && (
-          <>
+          <div className="col">
             <SubTaskInfos
               setToggleMoreInfos={setToggleMoreInfos}
               taskClicked={taskClicked}
@@ -113,7 +169,7 @@ function OneSubTask(props) {
             >
               Remove this task
             </button>
-          </>
+          </div>
         )}
       </div>
     </div>

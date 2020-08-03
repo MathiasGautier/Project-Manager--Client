@@ -2,35 +2,34 @@ import React, { useState, useEffect } from "react";
 import apiHandler from "../services/apiHandler";
 
 function SubtaskInfos(props) {
-    const [status, setStatus]=useState(undefined);
+  const [status, setStatus] = useState(undefined);
 
-
-  
   const id = props.taskClicked._id;
-useEffect(()=>{
-    
+  useEffect(() => {
     apiHandler
-    .getOneSubTodo(id)
-    .then((data)=>{
-        setStatus(data.status)
-    })
-    .catch((error)=>{console.log(error)})
-})
-  
+      .getOneSubTodo(id)
+      .then((data) => {
+        setStatus(data.status);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
 
   const setToDo = () => {
     const subTodo = { status: "To Do" };
     apiHandler
       .updateSubTodo(subTodo, id)
-      .then((data)=>{
-          apiHandler
+      .then((data) => {
+        apiHandler
           .getSubtodos()
-          .then((data)=>{
-              console.log(data)
-              props.setAllSubTodos(data)
-            })
-          .catch((error)=>{console.log(error)})
-        })
+          .then((data) => {
+            props.setAllSubTodos(data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
       .catch((error) => console.log(error));
   };
 
@@ -40,12 +39,13 @@ useEffect(()=>{
       .updateSubTodo(subTodo, id)
       .then((res) => {
         apiHandler
-        .getSubtodos()
-        .then((data)=>{
-            console.log(data)
-            props.setAllSubTodos(data)
+          .getSubtodos()
+          .then((data) => {
+            props.setAllSubTodos(data);
           })
-        .catch((error)=>{console.log(error)})
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => console.log(error));
   };
@@ -56,12 +56,13 @@ useEffect(()=>{
       .updateSubTodo(subTodo, id)
       .then((res) => {
         apiHandler
-        .getSubtodos()
-        .then((data)=>{
-            console.log(data)
-            props.setAllSubTodos(data)
+          .getSubtodos()
+          .then((data) => {
+            props.setAllSubTodos(data);
           })
-        .catch((error)=>{console.log(error)})
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => console.log(error));
   };

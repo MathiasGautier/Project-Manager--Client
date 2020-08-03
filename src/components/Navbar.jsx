@@ -21,12 +21,6 @@ function Navbar(props) {
     apiHandler
     .logout()
     .then((data) => {
-      // setUser(data.user);
-      // setIsAuthenticated(false);
-      // setMessage(true);
-      // timerID = setTimeout(() => {
-      //   setMessage(false);
-      // }, 3000);
       console.log(data)
     });
   };

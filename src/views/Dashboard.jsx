@@ -17,7 +17,7 @@ function Dashboard() {
 
 
   return (
-    <div className="row">
+    <div >
       <Navbar
         handleNewProject={handleNewProject}
         handleCurrentProject={handleCurrentProject}

@@ -4,6 +4,7 @@ import NewSubTask from "../components/NewSubTask";
 import OneSubTask from "../components/OneSubTask";
 import TaskHeader from "../components/TaskHeader";
 import UpdateProjectModal from "../components/UpdateProjectModal";
+import RemoveProjectModal from "../components/removeProjectModal";
 import { useHistory } from "react-router-dom";
 
 function OneTask(props) {
@@ -15,8 +16,6 @@ function OneTask(props) {
   const [comments, setComments] = useState([]);
 
   const history = useHistory();
-
-
 
   useEffect(() => {
     apiHandler
@@ -93,94 +92,64 @@ function OneTask(props) {
             apiHandler
               .deleteTodo(task._id)
               .then(() => {
-                history.push("/dashboard")
+                history.push("/dashboard");
               })
               .catch((error) => console.log(error));
           })
           .catch((error) => console.log(error));
       })
       .catch((error) => console.log(error));
+   
   };
-
 
   return (
     <>
-      <div className="row">
+      <div>
         <TaskHeader />
-        <div className="container">
+        <div className="container-fluid">
           {task && (
-            <>
-              <div className="display-3">{task.name}</div>
-              <h4>{task.description}</h4>
-              <h4>Created by {task.creator.username}</h4>
-
-              <button
-                className="btn btn-danger"
-                data-toggle="modal"
-                data-target="#removeProjectWarning"
-              >
-                Remove this project
-              </button>
-
-              {/* ///---------------------Modal */}
-              <div
-                className="modal fade"
-                id="removeProjectWarning"
-                tabIndex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-              >
-                <div className="modal-dialog" role="document">
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5 className="modal-title" id="exampleModalLabel">
-                        Remove '{task.name}' ?
-                      </h5>
-                    </div>
-                    <div className="modal-footer justify-content-center">
-                      <button
-                        type="button"
-                        className="btn btn-secondary"
-                        data-dismiss="modal"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-danger"
-                        data-dismiss="modal"
-                        onClick={() => handleProjectRemove(task)}
-                      >
-                        Confirm
-                      </button>
-                    </div>
-                  </div>
+            <div className="container-fluid oneProject-header mt-4 pb-2">
+              <div className="d-flex justify-content-between">
+                <div className="display-4 mb-3">{task.name}</div>
+                <div className="align-self-center">
+                <div className="d-flex flex-column">
+                <button
+                  className="btn btn-outline-danger"
+                  data-toggle="modal"
+                  data-target="#editProject"
+                >
+                  Edit this project
+                </button>
+                <UpdateProjectModal
+                  projectId={props.match.params.id}
+                  setTask={setTask}
+                  task={task}
+                />
+                 <button
+                  className="btn btn-outline-danger"
+                  data-toggle="modal"
+                  data-target="#removeProjectWarning"
+                >
+                  Remove this project
+                </button>
                 </div>
+                </div>
+                
+                <RemoveProjectModal
+              name={task.name}
+              handleProjectRemove={()=>handleProjectRemove(task)}
+            />
               </div>
-              <button
-                className="btn btn-success"
-                data-toggle="modal"
-                data-target="#editProject"
-              >
-                Edit this project
-              </button>
-              <UpdateProjectModal
-              projectId={props.match.params.id}
-              setTask={setTask}
-              task={task}
-               / >
-            </>
+              <div>
+                <h4 className="font-weight-light">{task.description}</h4>
+                <h5 className="font-weight-light">
+                  Created by {task.creator.username}
+                </h5>
+              </div>
+            </div>
           )}
 
-          <div>
-          {/* {subTodos===false ?
-          <div>
-            <h3>Create a task </h3>
-          </div>
-          :
-          null
-          } */}
+          <div className="container-fluid oneProject-body">
             <OneSubTask
               subTodos={subTodos}
               comments={comments}
@@ -190,21 +159,22 @@ function OneTask(props) {
               projectId={props.match.params.id}
             />
           </div>
-
-          <button onClick={handleToggleNewTask}>
-            {toggleNewTask ? <>Cancel</> : <>Create a new task</>}
-          </button>
-          {toggleNewTask ? (
-            <>
-              <h2>Add tasks</h2>
-              <NewSubTask
-                users={users}
-                id={props.match.params.id}
-                subTaskSubmitted={subTaskSubmitted}
-                setAllSubTodos={setAllSubTodos}
-              />
-            </>
-          ) : null}
+          <div className="container-fluid">
+            <button onClick={handleToggleNewTask}>
+              {toggleNewTask ? <>Cancel</> : <>Create a new task</>}
+            </button>
+            {toggleNewTask ? (
+              <>
+                <h2>Add tasks</h2>
+                <NewSubTask
+                  users={users}
+                  id={props.match.params.id}
+                  subTaskSubmitted={subTaskSubmitted}
+                  setAllSubTodos={setAllSubTodos}
+                />
+              </>
+            ) : null}
+          </div>
         </div>
       </div>
     </>

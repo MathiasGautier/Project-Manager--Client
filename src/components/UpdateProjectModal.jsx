@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import apiHandler from "../services/apiHandler";
+import RemoveProjectModal from "../components/removeProjectModal";
 
 function UpdateProjectModal(props) {
   const [name, setTitle] = useState("");
   const [description, setDescription] = useState("");
-console.log(props.task.name)
-console.log(props.task.description)
   const onSubmit = () => {
     let todoUpdate;
     let id = props.projectId;
@@ -99,6 +98,7 @@ console.log(props.task.description)
             >
               Confirm
             </button>
+            
           </div>
         </div>
       </div>
