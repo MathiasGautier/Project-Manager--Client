@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import apiHandler from "../services/apiHandler";
+import { AuthContext } from "../auth/AuthContext";
 import { NavLink } from "react-router-dom";
 
-function Tasks(props) {
+function Tasks() {
+  const authContext=useContext(AuthContext);  
   const [todos, setTodos] = useState(undefined);
   const [subTodos, setSubTodos] = useState(undefined);
 
@@ -28,44 +30,18 @@ function Tasks(props) {
       });
   }, []);
 
-  //  console.log(subTodos
-  //    &&
-  //   (
-  //     (subTodos.filter(
-  //       (x) =>
-  //         x.todoParent_id._id === "5f26e4630c4fe909b4294f73" && x.status === "Done"
-  //     ).length /
-  //       subTodos.filter((x) => x.todoParent_id._id === "5f26e4630c4fe909b4294f73")
-  //         .length) *
-  //     100
-  //   ).toFixed(0)
-  //   )
-  console.log(todos);
-  console.log(
-    subTodos &&
-      (subTodos.filter(
-        (x) =>
-          x.todoParent_id._id === "5f26e4630c4fe909b4294f73" &&
-          x.status === "Done"
-      ).length === 0
-        ? "No task yet"
-        : (subTodos.filter(
-            (x) =>
-              x.todoParent_id._id === "5f26e4630c4fe909b4294f73" &&
-              x.status === "Done"
-          ).length /
-            subTodos.filter(
-              (x) => x.todoParent_id._id === "5f26e4630c4fe909b4294f73"
-            ).length) *
-          (100).toFixed(0))
-  );
+
+
+console.log(authContext.user._id)
+console.log(todos && todos.map(x=>x.creator._id))
+console.log("laa", todos && todos.filter(x=>x.creator._id===authContext.user._id))
 
   return (
     <div className="container-fluid tasks">
       {todos &&
         todos.map((todo, index) => {
           return (
-            <div key={index} className="mt-4 tasksTwo bg-nav">
+            <div key={index} className="mt-4 tasksTwo bg-nav shadow">
               <div className="card-head">
                 <div className="col">
                   <NavLink
@@ -122,21 +98,25 @@ function Tasks(props) {
                 </p>
               </div>
               <div className="text-center mb-2 font-weight-bold">
-                {subTodos &&
-                  (subTodos.filter(
-                    (x) =>
-                      x.todoParent_id._id === todo._id && x.status === "Done"
-                  ).length === 0
-                    ? "No task yet"
-                    : (subTodos.filter(
-                        (x) =>
-                          x.todoParent_id._id === todo._id &&
-                          x.status === "Done"
-                      ).length /
-                        subTodos.filter((x) => x.todoParent_id._id === todo._id)
-                          .length) *
-                        (100).toFixed(0) +
-                      "%")}
+              {
+                subTodos &&
+      (subTodos.filter(
+        (x) =>
+          x.todoParent_id._id === todo._id &&
+        ( ( x.status === "Done")||( x.status === "In Progress")||( x.status === "To Do"))
+      ).length === 0
+        ? "No task yet"
+        : (subTodos.filter(
+            (x) =>
+              x.todoParent_id._id === todo._id &&
+              x.status === "Done"
+          ).length /
+            subTodos.filter(
+              (x) => x.todoParent_id._id === todo._id
+            ).length) *
+          (100).toFixed(0) + "%")
+  
+                    }
               </div>
 
               <div className="pl-3">

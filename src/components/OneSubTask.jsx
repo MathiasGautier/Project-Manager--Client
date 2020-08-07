@@ -41,7 +41,7 @@ function OneSubTask(props) {
     <div>
       <div>
         <div className="row">
-          <div className="col toDoCol text-center pb-2">
+          <div className="col toDoCol text-center pb-3">
             <h2 className="mt-2"> To Do</h2>
             {props.subTodos &&
               props.subTodos
@@ -52,7 +52,8 @@ function OneSubTask(props) {
                       <button
                         type="button"
                         data-toggle="button"
-                        className="btn btn-link"
+                        className="btn btn-info text-truncate mt-2 shadow"
+                        style={{width: "12rem"}}
                         onClick={(e) => toggleSubTask(x, e)}
                       >
                         {x.name}
@@ -61,7 +62,7 @@ function OneSubTask(props) {
                   );
                 })}
           </div>
-          <div className="col progressCol text-center">
+          <div className="col progressCol text-center pb-3">
             <h2 className="mt-2">In Progress</h2>
             {props.subTodos &&
               props.subTodos
@@ -72,7 +73,8 @@ function OneSubTask(props) {
                       <button
                         type="button"
                         data-toggle="button"
-                        className="btn btn-link"
+                        className="btn btn-info text-truncate mt-2 shadow"
+                        style={{width: "12rem"}}
                         onClick={(e) => toggleSubTask(x, e)}
                       >
                         {x.name}
@@ -81,7 +83,7 @@ function OneSubTask(props) {
                   );
                 })}
           </div>
-          <div className="col doneCol text-center">
+          <div className="col doneCol text-center pb-3">
             <h2 className="mt-2"> Done</h2>
             {props.subTodos &&
               props.subTodos
@@ -92,7 +94,8 @@ function OneSubTask(props) {
                       <button
                         type="button"
                         data-toggle="button"
-                        className="btn btn-link"
+                        className="btn btn-info text-truncate mt-2 shadow"
+                        style={{width: "12rem"}}
                         onClick={(e) => toggleSubTask(x, e)}
                       >
                         {x.name}

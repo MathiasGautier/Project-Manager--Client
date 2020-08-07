@@ -29,6 +29,7 @@ const history=useHistory();
         const { isAuthenticated, user } = data;
         authContext.setUser(user);
         authContext.setIsAuthenticated(isAuthenticated);
+        history.push("/dashboard");
       })
       .catch((error) => {
         console.log(error);
@@ -52,7 +53,6 @@ const history=useHistory();
         setMessage("yes");
         timerID = setTimeout(() => {
           login();
-          history.push("/dashboard");
         }, 2000);
       })
       .catch((error) => {

@@ -99,7 +99,6 @@ function OneTask(props) {
           .catch((error) => console.log(error));
       })
       .catch((error) => console.log(error));
-   
   };
 
   return (
@@ -108,48 +107,47 @@ function OneTask(props) {
         <TaskHeader />
         <div className="container-fluid">
           {task && (
-            <div className="container-fluid oneProject-header mt-4 pb-2">
-              <div className="d-flex justify-content-between">
-                <div className="display-4 mb-3">{task.name}</div>
-                <div className="align-self-center">
-                <div className="d-flex flex-column">
-                <button
-                  className="btn btn-outline-danger"
-                  data-toggle="modal"
-                  data-target="#editProject"
-                >
-                  Edit this project
-                </button>
+            <div className="container-fluid oneProject-header mt-4 pb-2 shadow">
+              <div className="row">
+              <div className="col-8">
+                <div className="display-4 mb-3 pl-2">{task.name}</div>
+                <div className="pl-2">
+                  <h4 className="font-weight-light">{task.description}</h4>
+                  <h5 className="font-weight-light">
+                    Created by {task.creator.username}
+                  </h5>
+                </div>
+                </div>
+                <div className="col d-flex flex-column justify-content-around buttons">
+                  <button
+                    className="btn btn-warning mt-3"
+                    data-toggle="modal"
+                    data-target="#editProject"
+                  >
+                    Edit this project
+                  </button>
+                  <button
+                    className="btn btn-danger mt-3"
+                    data-toggle="modal"
+                    data-target="#removeProjectWarning"
+                  >
+                    Remove this project
+                  </button>
+                </div>
                 <UpdateProjectModal
                   projectId={props.match.params.id}
                   setTask={setTask}
                   task={task}
                 />
-                 <button
-                  className="btn btn-outline-danger"
-                  data-toggle="modal"
-                  data-target="#removeProjectWarning"
-                >
-                  Remove this project
-                </button>
-                </div>
-                </div>
-                
                 <RemoveProjectModal
-              name={task.name}
-              handleProjectRemove={()=>handleProjectRemove(task)}
-            />
-              </div>
-              <div>
-                <h4 className="font-weight-light">{task.description}</h4>
-                <h5 className="font-weight-light">
-                  Created by {task.creator.username}
-                </h5>
+                  name={task.name}
+                  handleProjectRemove={() => handleProjectRemove(task)}
+                />
               </div>
             </div>
           )}
 
-          <div className="container-fluid oneProject-body">
+          <div className="container-fluid oneProject-body ">
             <OneSubTask
               subTodos={subTodos}
               comments={comments}
