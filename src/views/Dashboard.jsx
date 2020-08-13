@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Navbar from "../components/Navbar";
 import Tasks from "../components/Tasks";
 import NewTask from "../components/NewTask";
 
 function Dashboard() {
-  const [toggleTasks, setToggleTasks] = useState(true);
 
+  const [toggleTasks, setToggleTasks] = useState(true);
 
   const handleNewProject = () => {
     setToggleTasks(false);
@@ -13,7 +13,6 @@ function Dashboard() {
   const handleCurrentProject = () => {
     setToggleTasks(true);
   };
-
 
 
   return (

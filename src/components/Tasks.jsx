@@ -4,7 +4,7 @@ import { AuthContext } from "../auth/AuthContext";
 import { NavLink } from "react-router-dom";
 
 function Tasks() {
-  const authContext=useContext(AuthContext);  
+  const authContext = useContext(AuthContext);
   const [todos, setTodos] = useState(undefined);
   const [subTodos, setSubTodos] = useState(undefined);
 
@@ -19,6 +19,7 @@ function Tasks() {
       });
   }, []);
 
+
   useEffect(() => {
     apiHandler
       .getTodos()
@@ -30,11 +31,13 @@ function Tasks() {
       });
   }, []);
 
-
-
-console.log(authContext.user._id)
-console.log(todos && todos.map(x=>x.creator._id))
-console.log("laa", todos && todos.filter(x=>x.creator._id===authContext.user._id))
+  console.log("---", authContext)
+  // console.log(authContext.user._id);
+  // console.log(subTodos && subTodos.map((x) => x.workers.map(x=>x._id)));
+  // console.log(
+  //   "laa",
+  //   todos && todos.filter((x) => x.creator.username === authContext.user.username)
+  // );
 
   return (
     <div className="container-fluid tasks">
@@ -44,16 +47,43 @@ console.log("laa", todos && todos.filter(x=>x.creator._id===authContext.user._id
             <div key={index} className="mt-4 tasksTwo bg-nav shadow">
               <div className="card-head">
                 <div className="col">
-                  <NavLink
-                    className="nav-link title pl-3"
-                    exact
-                    to={{
-                      pathname: `/task/${todo._id}`,
-                    }}
-                  >
-                    {todo.name}
-                  </NavLink>
+                  <div className="d-flex">
+                    <NavLink
+                      className="nav-link title pl-3"
+                      exact
+                      to={{
+                        pathname: `/task/${todo._id}`,
+                      }}
+                    >
+                      {todo.name}
+                    </NavLink>
 
+                    {/* //if the user is the creator  */}
+                    {todo.creator.username  === authContext.user.username &&  (
+                      <svg
+                        width="2em"
+                        height="2em"
+                        viewBox="0 0 16 16"
+                        className="bi bi-person-circle text-success align-self-center"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z" />
+                        <path
+                          fillRule="evenodd"
+                          d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+                        />
+                        <path
+                          fillRule="evenodd"
+                          d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"
+                        />
+                      </svg>
+                    )}
+
+                    
+                    {/* {console.log(authContext)} */}
+
+                  </div>
                   <p className="pl-3 font-weight-light pb-2">
                     {todo.description}
                   </p>
@@ -98,25 +128,24 @@ console.log("laa", todos && todos.filter(x=>x.creator._id===authContext.user._id
                 </p>
               </div>
               <div className="text-center mb-2 font-weight-bold">
-              {
-                subTodos &&
-      (subTodos.filter(
-        (x) =>
-          x.todoParent_id._id === todo._id &&
-        ( ( x.status === "Done")||( x.status === "In Progress")||( x.status === "To Do"))
-      ).length === 0
-        ? "No task yet"
-        : (subTodos.filter(
-            (x) =>
-              x.todoParent_id._id === todo._id &&
-              x.status === "Done"
-          ).length /
-            subTodos.filter(
-              (x) => x.todoParent_id._id === todo._id
-            ).length) *
-          (100).toFixed(0) + "%")
-  
-                    }
+                {subTodos &&
+                  (subTodos.filter(
+                    (x) =>
+                      x.todoParent_id._id === todo._id &&
+                      (x.status === "Done" ||
+                        x.status === "In Progress" ||
+                        x.status === "To Do")
+                  ).length === 0
+                    ? "No task yet"
+                    : (subTodos.filter(
+                        (x) =>
+                          x.todoParent_id._id === todo._id &&
+                          x.status === "Done"
+                      ).length /
+                        subTodos.filter((x) => x.todoParent_id._id === todo._id)
+                          .length) *
+                        (100).toFixed(0) +
+                      "%")}
               </div>
 
               <div className="pl-3">
