@@ -5,7 +5,9 @@ $nav_t1: #e3f2fd;
   }
 
 @import "bootstrap";
-
+.opaque{
+    opacity: 1 !important; 
+}
 .auth-wrapper{
     margin: auto;
     background: #ffffff;

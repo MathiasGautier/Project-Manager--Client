@@ -9,6 +9,7 @@ import './style.scss';
 import 'jquery/dist/jquery';
 import 'bootstrap/dist/js/bootstrap';
 import 'popper.js';
+
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Dashboard from "./views/Dashboard";
 // import UnPrivateRoute from "./HOC/UnPrivateRoute"

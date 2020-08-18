@@ -7,7 +7,6 @@ function New_task(props) {
     description: "",
   });
 
-
   const [message, setMessage] = useState(false);
 
   let timerID = useRef(null);
@@ -48,46 +47,53 @@ function New_task(props) {
   };
 
   return (
-    <div className="container-fluid mt-5 ">
+    <div className="auth-wrapper">
       <form onSubmit={onSubmit}>
         <h3>New Project</h3>
-        <label htmlFor="title" className="sr-only">
-          Title :
-        </label>
-        <input
-          type="text"
-          name="name"
-          value={task.name}
-          onChange={onChange}
-          className="form-control"
-          placeholder="Enter a title for your project"
-        />
-        <label htmlFor="password" className="sr-only">
-          Description :
-        </label>
-        <input
-          type="text"
-          name="description"
-          value={task.description}
-          onChange={onChange}
-          className="form-control"
-          placeholder="Enter a description for your project"
-        />
 
+        <div className="form-group">
+          <label htmlFor="title">Title :</label>
+          <input
+            type="text"
+            name="name"
+            value={task.name}
+            onChange={onChange}
+            className="form-control"
+            placeholder="Enter a title for your project"
+          />
+        </div>
 
+        <div className="form-group">
+          <label htmlFor="description">Description :</label>
+          <textarea
+            type="text"
+            name="description"
+            value={task.description}
+            onChange={onChange}
+            className="form-control"
+            placeholder="Enter a description for your project"
+          />
+        </div>
 
-
-        <button className="btn btn-lg btn-primary btn-block mt-4" type="submit">
+        <button className="btn btn-primary btn-lg btn-block mt-4" type="submit">
           Create the project
+        </button>
+
+        <button
+          className="btn btn-danger btn-lg btn-block mt-4"
+          type="submit"
+          onClick={() => props.handleCurrentProject()}
+        >
+          Cancel
         </button>
       </form>
       {message === "yes" ? (
-        <div className="alert alert-success text-center" role="alert">
+        <div className="mt-2 alert alert-success text-center" role="alert">
           Project successfully created !
         </div>
       ) : null}
       {message === "no" ? (
-        <div className="alert alert-danger text-center" role="alert">
+        <div className="mt-2 alert alert-danger text-center" role="alert">
           Please verify the title and description fields
         </div>
       ) : null}

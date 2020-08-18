@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import apiHandler from "../services/apiHandler";
 import { AuthContext } from "../auth/AuthContext";
 import { NavLink } from "react-router-dom";
+import ReactTooltip from 'react-tooltip';
 
 function Tasks() {
   const authContext = useContext(AuthContext);
@@ -19,7 +20,6 @@ function Tasks() {
       });
   }, []);
 
-
   useEffect(() => {
     apiHandler
       .getTodos()
@@ -31,7 +31,6 @@ function Tasks() {
       });
   }, []);
 
-  console.log("---", authContext)
   // console.log(authContext.user._id);
   // console.log(subTodos && subTodos.map((x) => x.workers.map(x=>x._id)));
   // console.log(
@@ -40,11 +39,13 @@ function Tasks() {
   // );
 
   return (
+    
     <div className="container-fluid tasks">
       {todos &&
         todos.map((todo, index) => {
           return (
             <div key={index} className="mt-4 tasksTwo bg-nav shadow">
+            <ReactTooltip effect="solid"/>
               <div className="card-head">
                 <div className="col">
                   <div className="d-flex">
@@ -59,12 +60,14 @@ function Tasks() {
                     </NavLink>
 
                     {/* //if the user is the creator  */}
-                    {todo.creator.username  === authContext.user.username &&  (
+                    {todo.creator._id === authContext.user._id && (
+                    
                       <svg
                         width="2em"
                         height="2em"
                         viewBox="0 0 16 16"
                         className="bi bi-person-circle text-success align-self-center"
+                        data-tip="You are creator/admin of this project"
                         fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg"
                       >
@@ -78,15 +81,50 @@ function Tasks() {
                           d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"
                         />
                       </svg>
+
+                      
+                    
                     )}
 
-                    
-                    {/* {console.log(authContext)} */}
+                   
+
 
                   </div>
-                  <p className="pl-3 font-weight-light pb-2">
-                    {todo.description}
-                  </p>
+                  
+                  {subTodos &&
+                    subTodos
+                      .filter(
+                        (x) =>
+                          x.todoParent_id._id === todo._id &&
+                          (x.status === "To Do" || x.status === "In Progress")
+                      )
+                      .reduce(
+                        (acc, x) => [...acc, ...x.workers.map((x) => x._id)],
+                        []
+                      )
+                      .includes(authContext.user._id) && (
+                      <p className="pl-3">
+                        You have{" "}
+                        <span className="font-weight-bold">
+                          {subTodos &&
+                            subTodos
+                              .filter(
+                                (x) =>
+                                  x.todoParent_id._id === todo._id &&
+                                  (x.status === "To Do" ||
+                                    x.status === "In Progress")
+                              )
+                              .map(
+                                (x) =>
+                                  x.workers.filter(
+                                    (x) => x._id === authContext.user._id
+                                  ).length
+                              )
+                              .reduce((a, b) => a + b, 0)}
+                        </span>{" "}
+                        unfinished tasks
+                      </p>
+                    )}
                 </div>
                 <div className="col">
                   <p className="mt-3 text-right mr-4 font-weight-bold">
@@ -119,7 +157,7 @@ function Tasks() {
                     ).length}
                 </p>
                 <p className="pl-3">
-                  Completed :
+                  Completed:{" "}
                   {subTodos &&
                     subTodos.filter(
                       (x) =>
@@ -137,15 +175,17 @@ function Tasks() {
                         x.status === "To Do")
                   ).length === 0
                     ? "No task yet"
-                    : (subTodos.filter(
-                        (x) =>
-                          x.todoParent_id._id === todo._id &&
-                          x.status === "Done"
-                      ).length /
-                        subTodos.filter((x) => x.todoParent_id._id === todo._id)
-                          .length) *
-                        (100).toFixed(0) +
-                      "%")}
+                    : (
+                        (subTodos.filter(
+                          (x) =>
+                            x.todoParent_id._id === todo._id &&
+                            x.status === "Done"
+                        ).length /
+                          subTodos.filter(
+                            (x) => x.todoParent_id._id === todo._id
+                          ).length) *
+                        100
+                      ).toFixed(0) + "% complete")}
               </div>
 
               <div className="pl-3">
@@ -166,7 +206,7 @@ function Tasks() {
                               (x) => x.todoParent_id._id === todo._id
                             ).length) *
                           100
-                        ).toFixed(0) + "%"
+                        ).toFixed() + "%"
                       }`,
                     }}
                     aria-valuenow={
@@ -181,7 +221,7 @@ function Tasks() {
                             (x) => x.todoParent_id._id === todo._id
                           ).length) *
                         100
-                      ).toFixed(0) + "%"
+                      ).toFixed() + "%"
                     }
                     aria-valuemin="0"
                     aria-valuemax="100"
@@ -192,6 +232,8 @@ function Tasks() {
           );
         })}
     </div>
+    
+ 
   );
 }
 
