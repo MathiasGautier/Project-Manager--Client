@@ -3,7 +3,7 @@ import Comments from "../components/Comments";
 import SubTaskInfos from "../components/SubtaskInfos";
 import apiHandler from "../services/apiHandler";
 import { AuthContext } from "../auth/AuthContext";
-import ReactTooltip from 'react-tooltip';
+import ReactTooltip from "react-tooltip";
 
 function OneSubTask(props) {
   const authContext = useContext(AuthContext);
@@ -42,59 +42,44 @@ function OneSubTask(props) {
 
   return (
     <div>
-    
+    <div className="d-flex align-items-center">
+    <p><span className="text-success">Green</span> = you are assigned to this task</p>
+    </div>
       <div>
         <div className="row">
           <div className="col toDoCol text-center pb-3">
-            <h2 className="mt-2"> To Do</h2>
+            <h2 className="mt-2 status"> To Do</h2>
             {props.subTodos &&
               props.subTodos
                 .filter((x) => x.status === "To Do")
                 .map((x) => {
                   return (
-                    <div key={x._id} >
-                              <ReactTooltip effect="solid" type="dark" className="opaque"/>
+                    <div key={x._id}>
                       <button
                         type="button"
                         data-toggle="button"
-                        className="btn btn-info text-truncate mt-2 shadow"
-                        style={{ width: "12rem" }}
+                        className={`
+                          btn 
+                          btn-block text-truncate mt-2 shadow 
+                          
+                          ${
+                            x.workers
+                              .map((x) => x._id)
+                              .includes(authContext.user._id)
+                              ? "btn-success"
+                              : "btn-info"
+                          }
+                          `}
                         onClick={(e) => toggleSubTask(x, e)}
                       >
                         {x.name}
-                        {x.workers.map(
-                          (x, i) =>
-                            x._id === authContext.user._id && (
-                              <svg
-                                key={i}
-                                data-tip="You are assigned to this task"
-                                width="1.7em"
-                                height="1.7em"
-                                viewBox="0 0 16 16"
-                                className="bi bi-person-circle text-danger align-self-center ml-2"
-                                
-                                fill="currentColor"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z" />
-                                <path
-                                  fillRule="evenodd"
-                                  d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
-                                />
-                                <path
-                                  fillRule="evenodd"
-                                  d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"
-                                />
-                              </svg>
-                            )
-                        )}
                       </button>
                     </div>
                   );
                 })}
           </div>
           <div className="col progressCol text-center pb-3">
-            <h2 className="mt-2">In Progress</h2>
+            <h2 className="mt-2 status">In Progress</h2>
             {props.subTodos &&
               props.subTodos
                 .filter((x) => x.status === "In Progress")
@@ -104,43 +89,28 @@ function OneSubTask(props) {
                       <button
                         type="button"
                         data-toggle="button"
-                        className="btn btn-info text-truncate mt-2 shadow"
-                        style={{ width: "12rem" }}
+                        className={`
+                          btn 
+                          btn-block text-truncate mt-2 shadow
+                          ${
+                            x.workers
+                              .map((x) => x._id)
+                              .includes(authContext.user._id)
+                              ? "btn-success"
+                              : "btn-info"
+                          }
+                          `}
                         onClick={(e) => toggleSubTask(x, e)}
                       >
                         {x.name}
-                        {x.workers.map(
-                          (x, i) =>
-                            x._id === authContext.user._id && (
-                              <svg
-                                key={i}
-                                width="1.7em"
-                                height="1.7em"
-                                viewBox="0 0 16 16"
-                                className="bi bi-person-circle text-danger align-self-center ml-2"
-                                data-tip="You are assigned to this task"
-                                fill="currentColor"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z" />
-                                <path
-                                  fillRule="evenodd"
-                                  d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
-                                />
-                                <path
-                                  fillRule="evenodd"
-                                  d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"
-                                />
-                              </svg>
-                            )
-                        )}
+                       
                       </button>
                     </div>
                   );
                 })}
           </div>
           <div className="col doneCol text-center pb-3">
-            <h2 className="mt-2"> Done</h2>
+            <h2 className="mt-2 status"> Done</h2>
             {props.subTodos &&
               props.subTodos
                 .filter((x) => x.status === "Done")
@@ -150,36 +120,22 @@ function OneSubTask(props) {
                       <button
                         type="button"
                         data-toggle="button"
-                        className="btn btn-info text-truncate mt-2 shadow"
-                        style={{ width: "12rem" }}
+                        className={`
+                          btn 
+                          btn-block text-truncate mt-2 shadow
+                          ${
+                            x.workers
+                              .map((x) => x._id)
+                              .includes(authContext.user._id)
+                              ? "btn-success"
+                              : "btn-info"
+                          }
+                          `}
+                        // style={{ width: "12em" }}
                         onClick={(e) => toggleSubTask(x, e)}
                       >
                         {x.name}
-                        {x.workers.map(
-                          (x, i) =>
-                            x._id === authContext.user._id && (
-                              <svg
-                                key={i}
-                                width="1.7em"
-                                height="1.7em"
-                                viewBox="0 0 16 16"
-                                className="bi bi-person-circle text-danger align-self-center ml-2"
-                                data-tip="You are assigned to this task"
-                                fill="currentColor"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z" />
-                                <path
-                                  fillRule="evenodd"
-                                  d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
-                                />
-                                <path
-                                  fillRule="evenodd"
-                                  d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"
-                                />
-                              </svg>
-                            )
-                        )}
+                       
                       </button>
                     </div>
                   );

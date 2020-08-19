@@ -2,13 +2,15 @@ $nav_t1: #e3f2fd;
 
 .bg-nav {
     background-color: $nav_t1 !important;
-  }
+}
 
 @import "bootstrap";
-.opaque{
-    opacity: 1 !important; 
+
+.opaque {
+    opacity: 1 !important;
 }
-.auth-wrapper{
+
+.auth-wrapper {
     margin: auto;
     background: #ffffff;
     box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
@@ -16,113 +18,192 @@ $nav_t1: #e3f2fd;
     border-radius: 15px;
     transition: all .3s;
 }
-.auth-wapper, h3{
-    text-align:center;
+
+.auth-wapper,
+h3 {
+    text-align: center;
 }
-.shadow{
+
+.shadow {
     box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
 }
-.home-image{
+
+.home-image {
     background-image: url("/images/team_work_monochromatic.svg");
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     background-position: center;
-    height:400px;
-    border:1px solid black;
-    width:20px;
-}
-.header-home{
-    position:relative;
-    right:10px;
+    height: 400px;
+    border: 1px solid black;
+    width: 20px;
 }
 
-.bg-info{
-    background-color:darkgrey !important;
+.header-home {
+    position: relative;
+    right: 10px;
 }
 
-.cursor{
-    cursor:pointer;
+.bg-info {
+    background-color: darkgrey !important;
 }
 
-.statusButton{
+.cursor {
+    cursor: pointer;
+}
+
+.statusButton {
     pointer-events: none
 }
 
-.tasks{
-    width:90%;
-    padding:10px;
-}
-.tasksTwo{
-    border-radius:7px;
-    padding-bottom:15px;
+.tasks {
+    width: 90%;
+    padding: 10px;
 }
 
-.card-head{
-    border-top-left-radius:7px;
-    background-color:#bfdbf0;
-    border-top-right-radius:7px;
-    display:grid;    
-    grid-template-columns:1fr 1fr;      
+.tasksTwo {
+    border-radius: 7px;
+    padding-bottom: 15px;
 }
-.oneProject-header{
-    background-color:#bfdbf0;
-    border-radius:7px;
+
+.unfinishedTaskText {
+    width: 70vw;
 }
-.oneProject-body{
-    margin-top:10px;
+
+.card-head {
+    border-top-left-radius: 7px;
+    background-color: #bfdbf0;
+    border-top-right-radius: 7px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.oneProject-header {
+    background-color: #bfdbf0;
+    border-radius: 7px;
+}
+
+.oneProject-body {
+    margin-top: 10px;
     // background-color:#bfdbf0;
-    border-radius:7px
+    border-radius: 7px
 }
-.buttons{
-    height:100px;
-}
-.progressCol{
-    background-color:#bfdbf0;
+
+.progressCol {
+    background-color: #bfdbf0;
     box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
 }
-.toDoCol{
-    background-color:#e3f2fd;
-    border-bottom-left-radius:7px;
-    border-top-left-radius:7px;
+
+.toDoCol {
+    background-color: #e3f2fd;
+    border-bottom-left-radius: 7px;
+    border-top-left-radius: 7px;
     box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
 }
-.doneCol{
-    background-color:#e3f2fd;
-    border-bottom-right-radius:7px;
-    border-top-right-radius:7px;
+
+.doneCol {
+    background-color: #e3f2fd;
+    border-bottom-right-radius: 7px;
+    border-top-right-radius: 7px;
     box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+}
+
+.display-1 {
+    font-size: 2.5em;
+}
+
+.cardheadText {
+    position: relative;
+    right: 8px;
+}
+
+@media(min-width:840px) {
+    .navInfos {
+        width: 65vw;
+    }
+}
+
+@media(min-width:768px) {
+    .logout {
+        position: relative;
+        top: 10px;
+    }
 }
 
 @media (min-width: 576px) {
-.navBar{
-    height:90px;
-    font-size:1.2em;
+    .navBar {
+        height: 90px;
+        font-size: 1.2em;
+    }
+
+    .logout {
+        position: relative;
+        bottom: 10px;
+    }
+
+    .userName {
+        position: relative;
+        top: 10px;
+    }
+
+    .navInfos {
+        position: sticky;
+        left: 500px;
+    }
+
+    // .navItems{
+    //     width:75vw;
+    //     display:flex;
+    //     justify-content: space-between;
+    // }
+
+    .title {
+        font-size: 2em;
+    }
+
+    // .test{
+    //     width:25vw;
+    //     justify-content: space-between;
+    // }
 }
-.navItems{
-    width:75vw;
-    display:flex;
-    justify-content: space-between;
-}
-.title{
-    font-size:2em;
-}
-.test{
-    width:25vw;
-    justify-content: space-between;
-}
-}
+
 @media (max-width: 576px) {
-    .navBar{
-        font-size:1.1em;
+    .cardheadText {
+        width: 60vw;
     }
-    .toggleNav{
-        position:relative;
-        top:10px;
-        right:30px;
+
+    .navBar {
+        font-size: 1.1em;
     }
-    .title{
-        font-size:2em;
-        position:relative;
-        right:40px;
+
+    .toggleNav {
+        position: relative;
+        right: 10px;
     }
+
+    .title {
+        font-size: 2.2em;
     }
- 
+}
+
+@media (max-width:604px) {
+    .status {
+        font-size: 1.5em;
+    }
+}
+
+@media(max-width:483px) {
+    .status {
+        font-size: 1.2em;
+    }
+}
+
+@media(max-width:411px) {
+    .status {
+        font-size: 0.9em;
+    }
+
+    @media(max-width:338px) {
+        .status {
+            font-size: 0.82em;
+        }
+    }
+}

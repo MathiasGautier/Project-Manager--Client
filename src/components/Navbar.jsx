@@ -2,20 +2,11 @@ import React, { useContext, } from "react";
 import apiHandler from "../services/apiHandler";
 import { AuthContext } from "../auth/AuthContext";
 import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function Navbar(props) {
   const authContext = useContext(AuthContext);
-  // const { isAuthenticated, setIsAuthenticated, setUser } = useContext(
-  //   AuthContext
-  // );
-  // const [message, setMessage] = useState(false);
-  // let timerID = useRef(null);
-
-  // useEffect(() => {
-  //   return () => {
-  //     clearTimeout(timerID);
-  //   };
-  // }, []);
+console.log(props)
 
   const onClickLogoutHandled = () => {
     apiHandler
@@ -25,15 +16,24 @@ function Navbar(props) {
     });
   };
 
+  const history = useHistory();
+  const redirect = () => {
+    history.push("/dashboard");
+    props.toggleTasks===false &&
+    props.handleCurrentProject();
+  };
+
 
   return (
     <div className="container-fluid navBar">
-      <nav className="navbar navbar-expand-lg navbar-light navBar row bg-nav">
+
+      <nav className="navbar navbar-expand-sm navbar-light navBar row bg-nav">
+    <div className="d-flex" onClick={redirect}>
         <svg
           width="80"
           height="80"
           viewBox="0 0 16 16"
-          className="bi bi-check-all ml-3"
+          className="bi bi-check-all ml-sm-3 mr-3 mr-sm-0 mt-2"
           fill="rgb(0, 174, 255)"
         >
           <path
@@ -42,13 +42,15 @@ function Navbar(props) {
           />
         </svg>
         <div
-          className="align-self-center text-secondary display-4 title mb-2"
+          className=" text-secondary display-4 title align-self-center cursor"
           href="#"
         >
           Manager
         </div>
+</div>
+
         <button
-          className="navbar-toggler toggleNav"
+          className="navbar-toggler toggleNav mt-2 ml-3 ml-sm-0 mb-1 mb-sm-0"
           type="button"
           data-toggle="collapse"
           data-target="#navbarSupportedContent"
@@ -60,33 +62,18 @@ function Navbar(props) {
         </button>
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
-            <div className="navItems ml-4 mt-2">
-              <div className="d-sm-inline-flex ">
+
+          <ul className="navbar-nav mr-autor navInfos d-flex justify-content-between ">
+           <div></div>
+            <div className="d-md-flex d-sm-flex flex-column flex-md-row btnNav">
                 <li className="nav-item">
-                  <div 
-                  className={`flex-sm-fill nav-link cursor ${props.toggleTasks ? `active` : null}`} 
-                  onClick={props.handleCurrentProject}>
-                    Current Projects
-                  </div>
-                </li>
-                <li className="nav-item mr-3">
-                  <div
-                  className= {`flex-sm-fill nav-link cursor ${props.toggleTasks===false ? `active` : null}`}
-                  onClick={props.handleNewProject}>
-                    New Project
-                  </div>
-                </li>
-              </div>
-              <div className="d-sm-inline-flex test">
-                <li className="nav-item">
-                  <a className="flex-sm-fill nav-link disabled" href=" ">
+                  <a className=" nav-link disabled userName" href=" ">
                     Connected as {authContext.user.username}
                   </a>
                 </li>
                 <li className="nav-item">
                   <NavLink
-                    className="nav-link text-danger"
+                    className="nav-link text-danger logout"
                     exact
                     to="/"
                     onClick={onClickLogoutHandled}
@@ -94,8 +81,8 @@ function Navbar(props) {
                     Logout
                   </NavLink>
                 </li>
-              </div>
-            </div>
+                </div>
+          
           </ul>
         </div>
       </nav>

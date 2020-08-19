@@ -24,8 +24,9 @@ function Dashboard() {
       />
       {toggleTasks ? 
       <Tasks
+      handleNewProject={handleNewProject}
        /> : 
-       <div className="auth-wrapper">
+       <div className="container mt-5">
       <NewTask 
        handleCurrentProject={handleCurrentProject} 
       />

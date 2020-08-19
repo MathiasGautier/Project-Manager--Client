@@ -49,7 +49,7 @@ function New_task(props) {
   return (
     <div className="auth-wrapper">
       <form onSubmit={onSubmit}>
-        <h3>New Project</h3>
+        <h1 className="display-4 text-center">New Project</h1>
 
         <div className="form-group">
           <label htmlFor="title">Title :</label>

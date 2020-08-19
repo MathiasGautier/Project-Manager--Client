@@ -2,9 +2,9 @@ import React, { useEffect, useState, useContext } from "react";
 import apiHandler from "../services/apiHandler";
 import { AuthContext } from "../auth/AuthContext";
 import { NavLink } from "react-router-dom";
-import ReactTooltip from 'react-tooltip';
+import ReactTooltip from "react-tooltip";
 
-function Tasks() {
+function Tasks(props) {
   const authContext = useContext(AuthContext);
   const [todos, setTodos] = useState(undefined);
   const [subTodos, setSubTodos] = useState(undefined);
@@ -31,42 +31,60 @@ function Tasks() {
       });
   }, []);
 
-  // console.log(authContext.user._id);
-  // console.log(subTodos && subTodos.map((x) => x.workers.map(x=>x._id)));
-  // console.log(
-  //   "laa",
-  //   todos && todos.filter((x) => x.creator.username === authContext.user.username)
-  // );
 
   return (
-    
     <div className="container-fluid tasks">
+      <div className="d-md-flex justify-content-between mt-3 align-items-center">
+        <div className="mb-3 mb-md-0">
+          <div 
+          className="display-4 text-center text-primary"
+          >
+            Current Projects
+          </div>
+        </div>
+
+        <div>
+          <button
+            type="button"
+            className={`display-1 btn btn-outline-secondary btn-block ${props.toggleTasks===false ? `active` : null}`}
+            onClick={props.handleNewProject}
+          >
+            New Project +
+          </button>
+        </div>
+      </div>
+
       {todos &&
         todos.map((todo, index) => {
           return (
             <div key={index} className="mt-4 tasksTwo bg-nav shadow">
-            <ReactTooltip effect="solid"/>
+              <ReactTooltip effect="solid" />
               <div className="card-head">
                 <div className="col">
-                  <div className="d-flex">
-                    <NavLink
-                      className="nav-link title pl-3"
-                      exact
-                      to={{
-                        pathname: `/task/${todo._id}`,
-                      }}
-                    >
-                      {todo.name}
-                    </NavLink>
+                  <div className="d-sm-flex">
+
+                  <div className="ml-sm-0 cardheadText">
+                  <div className="ml-sm-0 text-break">
+                      <NavLink
+                        className="nav-link title"
+                        exact
+                        to={{
+                          pathname: `/task/${todo._id}`,
+                        }}
+                      >
+                        {todo.name}
+                      </NavLink>
+                  </div> 
+                  </div> 
 
                     {/* //if the user is the creator  */}
+                    <div className="align-self-center ml-2 mb-2 mb-sm-0">
                     {todo.creator._id === authContext.user._id && (
-                    
                       <svg
                         width="2em"
                         height="2em"
                         viewBox="0 0 16 16"
-                        className="bi bi-person-circle text-success align-self-center"
+                        className="bi bi-person-circle text-success "
                         data-tip="You are creator/admin of this project"
                         fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg"
@@ -81,16 +99,10 @@ function Tasks() {
                           d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"
                         />
                       </svg>
-
-                      
-                    
                     )}
-
-                   
-
-
+                      </div>
                   </div>
-                  
+                      
                   {subTodos &&
                     subTodos
                       .filter(
@@ -103,7 +115,7 @@ function Tasks() {
                         []
                       )
                       .includes(authContext.user._id) && (
-                      <p className="pl-3">
+                      <p className="pl-2 unfinishedTaskText">
                         You have{" "}
                         <span className="font-weight-bold">
                           {subTodos &&
@@ -232,8 +244,6 @@ function Tasks() {
           );
         })}
     </div>
-    
- 
   );
 }
 

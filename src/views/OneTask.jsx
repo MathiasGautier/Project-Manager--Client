@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import apiHandler from "../services/apiHandler";
 import NewSubTask from "../components/NewSubTask";
 import OneSubTask from "../components/OneSubTask";
-import TaskHeader from "../components/TaskHeader";
+import Navbar from "../components/Navbar"
 import UpdateProjectModal from "../components/UpdateProjectModal";
 import RemoveProjectModal from "../components/removeProjectModal";
 import { useHistory } from "react-router-dom";
+import {AuthContext} from "../auth/AuthContext";
 
 function OneTask(props) {
+  const authContext = useContext(AuthContext);
   const [task, setTask] = useState(undefined);
   const [users, setUsers] = useState(undefined);
   const [allSubTodos, setAllSubTodos] = useState(undefined);
@@ -101,39 +103,56 @@ function OneTask(props) {
       .catch((error) => console.log(error));
   };
 
+
+
   return (
-    <>
+    <div>
       <div>
-        <TaskHeader />
+        <Navbar />
         <div className="container-fluid">
           {task && (
-            <div className="container-fluid oneProject-header mt-4 pb-2 shadow">
+            <div className="container-fluid oneProject-header mt-4 pb-2 shadow d-flex ">
               <div className="row">
-              <div className="col-8">
-                <div className="display-4 mb-3 pl-2">{task.name}</div>
-                <div className="pl-2">
-                  <h4 className="font-weight-light">{task.description}</h4>
-                  <h5 className="font-weight-light">
+              <div className="">
+                <div className="display-1 mb-3 mt-2 pl-3 pr-3 text-left">{task.name}</div>
+
+                <div className="pl-3 pr-3">
+                  <p className="text-body text-break text-justify">{task.description}</p>
+
+                  <h5 className="font-weight-light mb-3">
                     Created by {task.creator.username}
                   </h5>
                 </div>
                 </div>
-                <div className="col d-flex flex-column justify-content-around buttons">
+
+                <div className="container buttons">
+
+            {task && (task.creator._id===authContext.user._id) ? 
+            <>
+                <div>
                   <button
-                    className="btn btn-warning mt-3"
+                    className="btn btn-warning btn-block mt-1"
                     data-toggle="modal"
                     data-target="#editProject"
                   >
                     Edit this project
                   </button>
+                  </div>
+                  <div>
                   <button
-                    className="btn btn-danger mt-3"
+                    className="btn btn-danger mt-2 mb-1 btn-block"
                     data-toggle="modal"
                     data-target="#removeProjectWarning"
                   >
                     Remove this project
                   </button>
+                  </div>
+                  </>
+:
+<p className="text-info">Only the creator of the project can edit or remove it</p>
+            }
                 </div>
+                
                 <UpdateProjectModal
                   projectId={props.match.params.id}
                   setTask={setTask}
@@ -175,7 +194,8 @@ function OneTask(props) {
           </div>
         </div>
       </div>
-    </>
+    </div>
+
   );
 }
 
