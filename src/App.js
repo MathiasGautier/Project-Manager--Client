@@ -4,6 +4,7 @@ import Tasks from './components/Tasks';
 import OneTask from './views/OneTask';
 import PrivateRoute from "./HOC/PrivateRoute";
 import './style.scss';
+import Footer from "./components/Footer.jsx"
 
 // import 'bootstrap/dist/css/bootstrap.css';
 import 'jquery/dist/jquery';
@@ -17,12 +18,15 @@ import Dashboard from "./views/Dashboard";
 function App() {
   
   return (
+    <>
     <Router>
       <Route exact path="/" component={Landing} />
       <PrivateRoute exact path="/dashboard" roles={["user", "admin"]} component={Dashboard} />
       <PrivateRoute exact path="/tasks" roles={["user", "admin"]} component={Tasks} />
       <PrivateRoute exact path="/task/:id" roles={["user", "admin"]} component={OneTask} />
     </Router>
+      <Footer />
+      </>
   );
 }
 

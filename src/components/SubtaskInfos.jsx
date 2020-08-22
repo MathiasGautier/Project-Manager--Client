@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import apiHandler from "../services/apiHandler";
+import RemoveTaskModal from "./RemoveTaskModal";
+import EditTaskModal from "./EditTaskModal";
 
 function SubtaskInfos(props) {
   const [status, setStatus] = useState(undefined);
@@ -67,21 +69,42 @@ function SubtaskInfos(props) {
       .catch((error) => console.log(error));
   };
 
+
+
   return (
     <>
-      <button
-        type="button"
-        className="close"
-        aria-label="Close"
-        onClick={() => props.setToggleMoreInfos(false)}
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <h2>Title :{props.taskClicked.name}</h2>
-      <h3>Description:{props.taskClicked.description}</h3>
-      <h3>Current status: {status}</h3>
+     <RemoveTaskModal
+     handleTaskRemove={props.handleTaskRemove}
+       taskClicked={props.taskClicked}
+     />
+     <EditTaskModal
+     setAllSubTodos={props.setAllSubTodos}
+      task={props.taskClicked}
+      users={props.users}
+     />
+<div className="d-flex justify-content-between">
+  
+        <h2 className="display-1 mb-3 mt-2 pr-3 text-left">
+          {props.taskClicked.name}
+        </h2>
 
-      <div className="d-flex">
+        <button
+          type="button"
+          className=" btn btn-primary backButton mt-3"
+          aria-label="Close"
+          onClick={() => props.setToggleMoreInfos(false)}
+        >
+        Back ⮌
+        </button>
+</div> 
+
+      <p className="text-body text-break text-justify">
+        {props.taskClicked.description}
+      </p>
+
+      <p className="text-primary">Click on a button to change the status.</p>
+
+      <div className="d-flex justify-content-center justify-content-sm-start">
         <button
           onClick={setToDo}
           className={
@@ -94,11 +117,13 @@ function SubtaskInfos(props) {
         </button>
         <button
           onClick={setInProgress}
-          className={
-            status === "In Progress"
-              ? "btn btn-success statusButton"
-              : "btn btn-secondary"
-          }
+          className={`ml-2 mr-2 
+            ${
+              status === "In Progress"
+                ? "btn btn-success statusButton"
+                : "btn btn-secondary"
+            }
+          `}
         >
           In progress
         </button>
@@ -115,12 +140,36 @@ function SubtaskInfos(props) {
       </div>
 
       <div>
-        Users:
-        {props.taskClicked.workers &&
-          props.taskClicked.workers.map((x, i) => (
-            <div key={i}>{x.username}</div>
-          ))}
+        <h2 className="display-1 mt-3">Users</h2>
+
+        <div className="d-flex flex-wrap ">
+          <div className="mr-1">|</div>
+          {props.taskClicked.workers &&
+            props.taskClicked.workers.map((x, i) => (
+              <div className="mr-1" key={i}>
+                {" "}
+                {x.username} |
+              </div>
+            ))}
+        </div>
       </div>
+
+      <button
+        className="btn btn-warning btn-sm mt-3 btnRemove mr-sm-2"
+        data-toggle="modal"
+        data-target="#editTaskWarning"
+      >
+        Edit this task
+      </button>
+
+      <button
+        className="btn btn-danger btn-sm mt-2 mt-sm-3 btnRemove"
+        data-toggle="modal"
+        data-target="#removeTaskWarning"
+      >
+        Remove this task
+      </button>
+      
     </>
   );
 }

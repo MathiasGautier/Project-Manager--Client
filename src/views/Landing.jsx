@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Login from "../components/Login";
 import Register from "../components/Register";
+import Footer from "../components/Footer";
 
 function Landing(props) {
   const [registerForm, setRegisterForm] = useState(false);
@@ -13,6 +14,7 @@ function Landing(props) {
     setRegisterForm(false);
   }
   return (
+    <>
     <div className="container-fluid">
       
       <div className="container-fluid">
@@ -49,6 +51,8 @@ function Landing(props) {
         </div>
       </div>
     </div>
+  
+    </>
   );
 }
 

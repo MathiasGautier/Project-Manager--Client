@@ -31,14 +31,11 @@ function Tasks(props) {
       });
   }, []);
 
-
   return (
     <div className="container-fluid tasks">
       <div className="d-md-flex justify-content-between mt-3 align-items-center">
         <div className="mb-3 mb-md-0">
-          <div 
-          className="display-4 text-center text-primary"
-          >
+          <div className="display-4 text-center text-primary">
             Current Projects
           </div>
         </div>
@@ -46,7 +43,9 @@ function Tasks(props) {
         <div>
           <button
             type="button"
-            className={`display-1 btn btn-outline-secondary btn-block ${props.toggleTasks===false ? `active` : null}`}
+            className={`display-1 btn btn-outline-secondary btn-block ${
+              props.toggleTasks === false ? `active` : null
+            }`}
             onClick={props.handleNewProject}
           >
             New Project +
@@ -62,47 +61,46 @@ function Tasks(props) {
               <div className="card-head">
                 <div className="col">
                   <div className="d-sm-flex">
-
-                  <div className="ml-sm-0 cardheadText">
-                  <div className="ml-sm-0 text-break">
-                      <NavLink
-                        className="nav-link title"
-                        exact
-                        to={{
-                          pathname: `/task/${todo._id}`,
-                        }}
-                      >
-                        {todo.name}
-                      </NavLink>
-                  </div> 
-                  </div> 
+                    <div className="ml-sm-0 cardheadText">
+                      <div className="ml-sm-0 text-break">
+                        <NavLink
+                          className="nav-link title"
+                          exact
+                          to={{
+                            pathname: `/task/${todo._id}`,
+                          }}
+                        >
+                          {todo.name}
+                        </NavLink>
+                      </div>
+                    </div>
 
                     {/* //if the user is the creator  */}
                     <div className="align-self-center ml-2 mb-2 mb-sm-0">
-                    {todo.creator._id === authContext.user._id && (
-                      <svg
-                        width="2em"
-                        height="2em"
-                        viewBox="0 0 16 16"
-                        className="bi bi-person-circle text-success "
-                        data-tip="You are creator/admin of this project"
-                        fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z" />
-                        <path
-                          fillRule="evenodd"
-                          d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
-                        />
-                        <path
-                          fillRule="evenodd"
-                          d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"
-                        />
-                      </svg>
-                    )}
-                      </div>
+                      {todo.creator._id === authContext.user._id && (
+                        <svg
+                          width="2em"
+                          height="2em"
+                          viewBox="0 0 16 16"
+                          className="bi bi-person-circle text-success "
+                          data-tip="You are creator/admin of this project"
+                          fill="currentColor"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z" />
+                          <path
+                            fillRule="evenodd"
+                            d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+                          />
+                          <path
+                            fillRule="evenodd"
+                            d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"
+                          />
+                        </svg>
+                      )}
+                    </div>
                   </div>
-                      
+
                   {subTodos &&
                     subTodos
                       .filter(
@@ -139,7 +137,7 @@ function Tasks(props) {
                     )}
                 </div>
                 <div className="col">
-                  <p className="mt-3 text-right mr-4 font-weight-bold">
+                  <p className="mt-3 text-right mr-1 mr-sm-4 font-weight-bold">
                     {subTodos &&
                       subTodos.filter((x) => x.todoParent_id._id === todo._id)
                         .length}{" "}

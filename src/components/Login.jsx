@@ -1,13 +1,13 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import apiHandler from "../services/apiHandler";
 import { AuthContext } from "../auth/AuthContext";
-import { useHistory} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 function Login(props) {
   const [user, setUser] = useState({ username: "", password: "" });
   const [message, setMessage] = useState(false);
   let timerID = useRef(null);
-  const history=useHistory();
+  const history = useHistory();
   const authContext = useContext(AuthContext);
 
   useEffect(() => {
@@ -16,8 +16,6 @@ function Login(props) {
     };
   }, []);
 
-
-
   const onChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -25,8 +23,6 @@ function Login(props) {
   const resetForm = () => {
     setUser({ username: "", password: "" });
   };
-
-
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -39,7 +35,7 @@ function Login(props) {
         timerID = setTimeout(() => {
           authContext.setUser(user);
           authContext.setIsAuthenticated(isAuthenticated);
-          history.push('/dashboard')
+          history.push("/dashboard");
         }, 2000);
       })
       .catch((error) => {
@@ -51,7 +47,6 @@ function Login(props) {
         console.log(error);
       });
   };
-
 
   return (
     <div className="auth-wrapper">

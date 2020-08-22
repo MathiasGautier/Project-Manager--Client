@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import Navbar from "../components/Navbar";
 import Tasks from "../components/Tasks";
 import NewTask from "../components/NewTask";
+import Footer from "../components/Footer";
 
 function Dashboard() {
 
@@ -14,8 +15,8 @@ function Dashboard() {
     setToggleTasks(true);
   };
 
-
   return (
+    <>
     <div >
       <Navbar
         handleNewProject={handleNewProject}
@@ -31,7 +32,12 @@ function Dashboard() {
        handleCurrentProject={handleCurrentProject} 
       />
       </div>}
+     
+   
+      
     </div>
+      {/* <Footer /> */}
+      </>
   );
 }
 

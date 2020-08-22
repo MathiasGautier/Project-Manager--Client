@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 
 function Navbar(props) {
   const authContext = useContext(AuthContext);
-console.log(props)
+
 
   const onClickLogoutHandled = () => {
     apiHandler
@@ -33,7 +33,7 @@ console.log(props)
           width="80"
           height="80"
           viewBox="0 0 16 16"
-          className="bi bi-check-all ml-sm-3 mr-3 mr-sm-0 mt-2"
+          className="bi bi-check-all ml-sm-3 mr-3 mr-sm-0 mt-2 navbarLogo"
           fill="rgb(0, 174, 255)"
         >
           <path
@@ -42,7 +42,7 @@ console.log(props)
           />
         </svg>
         <div
-          className=" text-secondary display-4 title align-self-center cursor"
+          className=" text-secondary display-4 title align-self-center cursor navBarHeader"
           href="#"
         >
           Manager
@@ -50,7 +50,7 @@ console.log(props)
 </div>
 
         <button
-          className="navbar-toggler toggleNav mt-2 ml-3 ml-sm-0 mb-1 mb-sm-0"
+          className="navbar-toggler toggleNav mt-3 ml-3 ml-sm-0 mb-1 mb-sm-0"
           type="button"
           data-toggle="collapse"
           data-target="#navbarSupportedContent"

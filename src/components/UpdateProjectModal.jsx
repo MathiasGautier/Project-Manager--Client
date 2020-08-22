@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import apiHandler from "../services/apiHandler";
-import RemoveProjectModal from "../components/removeProjectModal";
 
 function UpdateProjectModal(props) {
   const [name, setTitle] = useState("");
@@ -53,7 +52,7 @@ function UpdateProjectModal(props) {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="exampleModalLabel">
-              Edit Project infos
+              Edit project infos
             </h5>
           </div>
           <div className="modal-body">

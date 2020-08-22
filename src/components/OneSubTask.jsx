@@ -7,17 +7,17 @@ import ReactTooltip from "react-tooltip";
 
 function OneSubTask(props) {
   const authContext = useContext(AuthContext);
-  const [toggleMoreInfos, setToggleMoreInfos] = useState(false);
+  // const [toggleMoreInfos, setToggleMoreInfos] = useState(false);
   const [taskClicked, setTaskClicked] = useState({});
 
   const toggleSubTask = (x, e) => {
     e.preventDefault();
-    setToggleMoreInfos(true);
+    props.setToggleMoreInfos(true);
     setTaskClicked(x);
   };
 
   const handleTaskRemove = (x) => {
-    setToggleMoreInfos(false);
+    props.setToggleMoreInfos(false);
     apiHandler
       .deletSubTodoComments(x._id)
       .then(() => {
@@ -42,23 +42,60 @@ function OneSubTask(props) {
 
   return (
     <div>
-    <div className="d-flex align-items-center">
-    <p><span className="text-success">Green</span> = you are assigned to this task</p>
-    </div>
-      <div>
-        <div className="row">
-          <div className="col toDoCol text-center pb-3">
-            <h2 className="mt-2 status"> To Do</h2>
-            {props.subTodos &&
-              props.subTodos
-                .filter((x) => x.status === "To Do")
-                .map((x) => {
-                  return (
-                    <div key={x._id}>
-                      <button
-                        type="button"
-                        data-toggle="button"
-                        className={`
+      {props.toggleMoreInfos && (
+        <div className="row subTaskInfos mt-4">
+          <div className="container-fluid ">
+            <SubTaskInfos
+           setAllSubTodos={props.setAllSubTodos}
+             users={props.users}
+              setToggleMoreInfos={props.setToggleMoreInfos}
+              taskClicked={taskClicked}
+              setAllSubTodos={props.setAllSubTodos}
+              subTodo={props.subTodos}
+              handleTaskRemove={handleTaskRemove}
+            />
+            <Comments
+              projectId={props.projectId}
+              comments={props.comments}
+              taskClickedId={taskClicked._id}
+              setComments={props.setComments}
+              users={props.users}
+            />
+
+            
+          </div>
+        </div>
+      )}
+      {!props.toggleMoreInfos && (
+        <>
+          {props.subTodos?.length === 0 && (
+            <div className="alert alert-warning text-center mt-4">
+              You must create tasks to start working on this project.
+            </div>
+          )}
+
+          {props.subTodos?.length > 0 && (
+            <>
+              <div className="d-flex align-items-center">
+                <p>
+                  <span className="text-success">Green</span> = you are assigned
+                  to this task
+                </p>
+              </div>
+              <div>
+                <div className="row">
+                  <div className="col toDoCol text-center pb-3">
+                    <h2 className="mt-2 status"> To Do</h2>
+                    {props.subTodos &&
+                      props.subTodos
+                        .filter((x) => x.status === "To Do")
+                        .map((x) => {
+                          return (
+                            <div key={x._id}>
+                              <button
+                                type="button"
+                                data-toggle="button"
+                                className={`
                           btn 
                           btn-block text-truncate mt-2 shadow 
                           
@@ -70,26 +107,26 @@ function OneSubTask(props) {
                               : "btn-info"
                           }
                           `}
-                        onClick={(e) => toggleSubTask(x, e)}
-                      >
-                        {x.name}
-                      </button>
-                    </div>
-                  );
-                })}
-          </div>
-          <div className="col progressCol text-center pb-3">
-            <h2 className="mt-2 status">In Progress</h2>
-            {props.subTodos &&
-              props.subTodos
-                .filter((x) => x.status === "In Progress")
-                .map((x, i) => {
-                  return (
-                    <div key={i}>
-                      <button
-                        type="button"
-                        data-toggle="button"
-                        className={`
+                                onClick={(e) => toggleSubTask(x, e)}
+                              >
+                                {x.name}
+                              </button>
+                            </div>
+                          );
+                        })}
+                  </div>
+                  <div className="col progressCol text-center pb-3">
+                    <h2 className="mt-2 status">In Progress</h2>
+                    {props.subTodos &&
+                      props.subTodos
+                        .filter((x) => x.status === "In Progress")
+                        .map((x, i) => {
+                          return (
+                            <div key={i}>
+                              <button
+                                type="button"
+                                data-toggle="button"
+                                className={`
                           btn 
                           btn-block text-truncate mt-2 shadow
                           ${
@@ -100,27 +137,26 @@ function OneSubTask(props) {
                               : "btn-info"
                           }
                           `}
-                        onClick={(e) => toggleSubTask(x, e)}
-                      >
-                        {x.name}
-                       
-                      </button>
-                    </div>
-                  );
-                })}
-          </div>
-          <div className="col doneCol text-center pb-3">
-            <h2 className="mt-2 status"> Done</h2>
-            {props.subTodos &&
-              props.subTodos
-                .filter((x) => x.status === "Done")
-                .map((x, i) => {
-                  return (
-                    <div key={i}>
-                      <button
-                        type="button"
-                        data-toggle="button"
-                        className={`
+                                onClick={(e) => toggleSubTask(x, e)}
+                              >
+                                {x.name}
+                              </button>
+                            </div>
+                          );
+                        })}
+                  </div>
+                  <div className="col doneCol text-center pb-3">
+                    <h2 className="mt-2 status"> Done</h2>
+                    {props.subTodos &&
+                      props.subTodos
+                        .filter((x) => x.status === "Done")
+                        .map((x, i) => {
+                          return (
+                            <div key={i}>
+                              <button
+                                type="button"
+                                data-toggle="button"
+                                className={`
                           btn 
                           btn-block text-truncate mt-2 shadow
                           ${
@@ -131,87 +167,23 @@ function OneSubTask(props) {
                               : "btn-info"
                           }
                           `}
-                        // style={{ width: "12em" }}
-                        onClick={(e) => toggleSubTask(x, e)}
-                      >
-                        {x.name}
-                       
-                      </button>
-                    </div>
-                  );
-                })}
-          </div>
-        </div>
-
-        {props.subTodos &&
-          props.subTodos.map((x, i) => (
-            <div key={i}>
-              <div
-                className="modal fade"
-                id="removeWarning"
-                tabIndex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-              >
-                <div className="modal-dialog" role="document">
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5 className="modal-title" id="exampleModalLabel">
-                        Remove {x.name} ?
-                      </h5>
-                    </div>
-                    <div className="modal-footer justify-content-center">
-                      <button
-                        type="button"
-                        className="btn btn-secondary"
-                        data-dismiss="modal"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-danger"
-                        data-dismiss="modal"
-                        onClick={() => handleTaskRemove(x)}
-                      >
-                        Confirm
-                      </button>
-                    </div>
+                                
+                                onClick={(e) => toggleSubTask(x, e)}
+                              >
+                                {x.name}
+                              </button>
+                            </div>
+                          );
+                        })}
                   </div>
                 </div>
+
+              
               </div>
-            </div>
-          ))}
-      </div>
-
-      <div className="bg-nav row mt-4">
-        {toggleMoreInfos && (
-          <div className="col">
-            <SubTaskInfos
-              setToggleMoreInfos={setToggleMoreInfos}
-              taskClicked={taskClicked}
-              setAllSubTodos={props.setAllSubTodos}
-              subTodo={props.subTodos}
-            />
-            <Comments
-              projectId={props.projectId}
-              comments={props.comments}
-              taskClickedId={taskClicked._id}
-              setComments={props.setComments}
-              users={props.users}
-            />
-
-            <button
-              className="btn btn-danger"
-              data-toggle="modal"
-              data-target="#removeWarning"
-            >
-              Remove this task
-            </button>
-          </div>
-        )}
-      </div>
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 }

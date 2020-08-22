@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import apiHandler from "../services/apiHandler";
-import NewSubTask from "../components/NewSubTask";
 import OneSubTask from "../components/OneSubTask";
-import Navbar from "../components/Navbar"
+import Navbar from "../components/Navbar";
 import UpdateProjectModal from "../components/UpdateProjectModal";
 import RemoveProjectModal from "../components/removeProjectModal";
+import SubTaskInfos from "../components/SubtaskInfos";
+import Comments from "../components/Comments";
+import CreateTaskModal from "../components/CreateTaskModal";
 import { useHistory } from "react-router-dom";
-import {AuthContext} from "../auth/AuthContext";
+import { AuthContext } from "../auth/AuthContext";
 
 function OneTask(props) {
   const authContext = useContext(AuthContext);
@@ -16,6 +18,7 @@ function OneTask(props) {
   const [subTodos, setSubTodos] = useState(undefined);
   const [toggleNewTask, setToggleNewTask] = useState(false);
   const [comments, setComments] = useState([]);
+  const [toggleMoreInfos, setToggleMoreInfos] = useState(false);
 
   const history = useHistory();
 
@@ -76,10 +79,6 @@ function OneTask(props) {
     setSubTodos(res);
   }, [task, allSubTodos]);
 
-  const handleToggleNewTask = (e) => {
-    toggleNewTask === false ? setToggleNewTask(true) : setToggleNewTask(false);
-  };
-
   const subTaskSubmitted = (data) => {
     setToggleNewTask(false);
   };
@@ -103,56 +102,80 @@ function OneTask(props) {
       .catch((error) => console.log(error));
   };
 
-
+ 
+  const redirect = () => {
+    history.push("/dashboard");
+    props.toggleTasks===false &&
+    props.handleCurrentProject();
+  };
 
   return (
     <div>
       <div>
         <Navbar />
-        <div className="container-fluid">
-          {task && (
+        <div className="container-fluid mb-4">
+          {task && !toggleMoreInfos && (
             <div className="container-fluid oneProject-header mt-4 pb-2 shadow d-flex ">
               <div className="row">
-              <div className="">
-                <div className="display-1 mb-3 mt-2 pl-3 pr-3 text-left">{task.name}</div>
+                <div className="">
 
-                <div className="pl-3 pr-3">
-                  <p className="text-body text-break text-justify">{task.description}</p>
+                <div className="titleHeader d-flex justify-content-between">
+                  
+                    <div className="display-1 mb-3 mt-2 pl-3 pr-3 text-left text-break titleOneTask">
+                      {task.name}
+                    </div>
+  
+                    <button
+          type="button"
+          className=" btn btn-primary backButton mt-3 mr-4 mr-sm-3 mr-lg-0"
+          aria-label="Close"
+          onClick={redirect}
+        >
+        Back ⮌
+        </button>
+                   
 
-                  <h5 className="font-weight-light mb-3">
-                    Created by {task.creator.username}
-                  </h5>
-                </div>
-                </div>
+                </div> 
+                  <div className="pl-3 pr-3">
+                    <p className="text-body text-break text-justify pr-3 pr-sm-0">
+                      {task.description}
+                    </p>
 
-                <div className="container buttons">
-
-            {task && (task.creator._id===authContext.user._id) ? 
-            <>
-                <div>
-                  <button
-                    className="btn btn-warning btn-block mt-1"
-                    data-toggle="modal"
-                    data-target="#editProject"
-                  >
-                    Edit this project
-                  </button>
+                    <h5 className="font-weight-light mb-3">
+                      Created by {task.creator.username}
+                    </h5>
                   </div>
-                  <div>
-                  <button
-                    className="btn btn-danger mt-2 mb-1 btn-block"
-                    data-toggle="modal"
-                    data-target="#removeProjectWarning"
-                  >
-                    Remove this project
-                  </button>
-                  </div>
-                  </>
-:
-<p className="text-info">Only the creator of the project can edit or remove it</p>
-            }
                 </div>
-                
+
+                <div className="container-fluid d-flex flex-column flex-sm-row mb-1 buttonsGroup">
+                  {task && task.creator._id === authContext.user._id ? (
+                    <>
+                      <div>
+                        <button
+                          className="btn btn-sm btn-warning mr-sm-2 mb-2 mb-sm-0 buttons"
+                          data-toggle="modal"
+                          data-target="#editProject"
+                        >
+                          Edit this project
+                        </button>
+                      </div>
+                      <div>
+                        <button
+                          className="btn btn-sm btn-danger buttons"
+                          data-toggle="modal"
+                          data-target="#removeProjectWarning"
+                        >
+                          Remove this project
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <p className="text-info">
+                      Only the creator of the project can edit or remove it
+                    </p>
+                  )}
+                </div>
+
                 <UpdateProjectModal
                   projectId={props.match.params.id}
                   setTask={setTask}
@@ -163,39 +186,47 @@ function OneTask(props) {
                   handleProjectRemove={() => handleProjectRemove(task)}
                 />
               </div>
+              
+            
             </div>
           )}
 
+          {!toggleMoreInfos && (
+            <button
+              className="btn btn-block btn-sm mt-2 btn-outline-primary"
+              data-toggle="modal"
+              data-target="#createTask"
+            >
+              Create a new task
+            </button>
+          )}
+
+          <div>
+            <CreateTaskModal
+              users={users}
+              id={props.match.params.id}
+              subTaskSubmitted={subTaskSubmitted}
+              setAllSubTodos={setAllSubTodos}
+            />
+          </div>
+
           <div className="container-fluid oneProject-body ">
             <OneSubTask
+            setAllSubTodos={setAllSubTodos}
+              users={users}
               subTodos={subTodos}
               comments={comments}
+              setToggleMoreInfos={setToggleMoreInfos}
+              toggleMoreInfos={toggleMoreInfos}
               setComments={setComments}
               users={users}
               setAllSubTodos={setAllSubTodos}
               projectId={props.match.params.id}
             />
           </div>
-          <div className="container-fluid">
-            <button onClick={handleToggleNewTask}>
-              {toggleNewTask ? <>Cancel</> : <>Create a new task</>}
-            </button>
-            {toggleNewTask ? (
-              <>
-                <h2>Add tasks</h2>
-                <NewSubTask
-                  users={users}
-                  id={props.match.params.id}
-                  subTaskSubmitted={subTaskSubmitted}
-                  setAllSubTodos={setAllSubTodos}
-                />
-              </>
-            ) : null}
-          </div>
         </div>
       </div>
     </div>
-
   );
 }
 
