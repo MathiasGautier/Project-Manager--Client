@@ -7,6 +7,8 @@ export default ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isloaded, setIsLoaded] = useState(false);
+
+
   useEffect(() => {
     apiHandler.isAuthenticated()
     .then((data) => {

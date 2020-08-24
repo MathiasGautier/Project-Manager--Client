@@ -23,14 +23,14 @@ function Login(props) {
   const resetForm = () => {
     setUser({ username: "", password: "" });
   };
-
   const onSubmit = (e) => {
     e.preventDefault();
     apiHandler
       .login(user)
       .then((data) => {
         setMessage("yes");
-        const { isAuthenticated, user } = data;
+        const isAuthenticated = data;
+        const user=data;
         resetForm();
         timerID = setTimeout(() => {
           authContext.setUser(user);

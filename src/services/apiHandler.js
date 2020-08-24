@@ -56,7 +56,7 @@ export default {
     isAuthenticated() {
         return service
             .get("/user/authenticated")
-            .then((res) => res.data)
+            .then((res) => {return res.data})
             .catch(errorHandler);
     },
 
