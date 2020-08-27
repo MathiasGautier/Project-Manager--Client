@@ -97,7 +97,7 @@ function Comments(props) {
                       data-target="#removeComWarning"
                       onClick={() => setComClicked(x)}
                     >
-                      Delete
+                       Delete
                     </button>
                   </div>
                   <p className="text-justify pb-2">{x.text}</p>
