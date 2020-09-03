@@ -14,10 +14,9 @@ function OneTask(props) {
   const [users, setUsers] = useState(undefined);
   const [allSubTodos, setAllSubTodos] = useState(undefined);
   const [subTodos, setSubTodos] = useState(undefined);
- // const [toggleNewTask, setToggleNewTask] = useState(false);
+  // const [toggleNewTask, setToggleNewTask] = useState(false);
   const [comments, setComments] = useState([]);
   const [toggleMoreInfos, setToggleMoreInfos] = useState(false);
-
 
   const history = useHistory();
 
@@ -42,8 +41,6 @@ function OneTask(props) {
         console.log(error);
       });
   }, []);
-
-
 
   useEffect(() => {
     apiHandler
@@ -111,7 +108,7 @@ function OneTask(props) {
   return (
     <div>
       <div>
-        <Navbar />
+        <Navbar authContext={authContext} />
         <div className="container-fluid mb-4">
           {task && !toggleMoreInfos && (
             <div className="container-fluid oneProject-header mt-4 pb-2 shadow d-flex ">
