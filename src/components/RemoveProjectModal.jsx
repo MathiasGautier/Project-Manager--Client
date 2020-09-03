@@ -1,10 +1,6 @@
 import React from 'react'
 
-function removeProjectModal(props) {
-
-  const handleCloseModal=()=>{
-    
-  }
+function RemoveProjectModal(props) {
     return (
         <div>
             <div
@@ -48,4 +44,4 @@ function removeProjectModal(props) {
     )
 }
 
-export default removeProjectModal
+export default RemoveProjectModal

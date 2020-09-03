@@ -6,8 +6,6 @@ function CreateTaskModal(props) {
   const [descr, setDescription] = useState("");
   const [workersId, setWorkers] = useState([]);
   const [workerNames, setWorkerNames] = useState([]);
- 
-  
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -32,30 +30,31 @@ function CreateTaskModal(props) {
     const workers = [...new Set(workersId)];
     const todoParent_id = props.id;
     const subTodo = { name, description, workers, todoParent_id };
-    
-    workers.length===0? resetForm() : 
-    apiHandler
-      .postSubTodo(subTodo)
-      .then((data) => {
-        resetForm();
-        props.subTaskSubmitted(data);
-        apiHandler
-          .getSubtodos()
+
+    workers.length === 0
+      ? resetForm()
+      : apiHandler
+          .postSubTodo(subTodo)
           .then((data) => {
-            props.setAllSubTodos(data);
+            resetForm();
+            //props.subTaskSubmitted(data);
+            apiHandler
+              .getSubtodos()
+              .then((data) => {
+                props.setAllSubTodos(data);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           })
           .catch((error) => {
             console.log(error);
           });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   const resetForm = () => {
-    setTitle('');
-    setDescription('');
+    setTitle("");
+    setDescription("");
     setWorkerNames([]);
     setWorkers([]);
   };
@@ -82,33 +81,31 @@ function CreateTaskModal(props) {
                 Fill in the details of the task and the people select that will
                 work on it.
               </p>
-             
-                <label htmlFor="project-title" className="mr-sm-2">
-                  Title
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  className="form-control"
-                  placeholder="Title"
-                  onChange={onChangeTitle}
-                  value={title}
-                />
 
-                <label htmlFor="project-title" className="mr-sm-2">
-                  Description :
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  className="form-control"
-                  placeholder="Description"
-                  onChange={onChangeDescritpion}
-                  value={descr}
-                />
-              
+              <label htmlFor="project-title" className="mr-sm-2">
+                Title
+              </label>
+              <input
+                type="text"
+                name="name"
+                className="form-control"
+                placeholder="Title"
+                onChange={onChangeTitle}
+                value={title}
+              />
 
-             
+              <label htmlFor="project-title" className="mr-sm-2">
+                Description :
+              </label>
+              <input
+                type="text"
+                name="name"
+                className="form-control"
+                placeholder="Description"
+                onChange={onChangeDescritpion}
+                value={descr}
+              />
+
               <label className="mr-sm-2" htmlFor="inlineFormCustomSelect">
                 Assign people to this task :
               </label>
@@ -148,10 +145,9 @@ function CreateTaskModal(props) {
               </button>
               <button
                 className="btn btn-danger"
-                data-dismiss={(title && descr && workersId.length>0) && "modal"}
+                data-dismiss={title && descr && workersId.length > 0 && "modal"}
                 onClick={onSubmit}
               >
-             
                 Confirm
               </button>
             </div>

@@ -69,21 +69,18 @@ function SubtaskInfos(props) {
       .catch((error) => console.log(error));
   };
 
-
-
   return (
     <>
-     <RemoveTaskModal
-     handleTaskRemove={props.handleTaskRemove}
-       taskClicked={props.taskClicked}
-     />
-     <EditTaskModal
-     setAllSubTodos={props.setAllSubTodos}
-      task={props.taskClicked}
-      users={props.users}
-     />
-<div className="d-flex justify-content-between">
-  
+      <RemoveTaskModal
+        handleTaskRemove={props.handleTaskRemove}
+        taskClicked={props.taskClicked}
+      />
+      <EditTaskModal
+        setAllSubTodos={props.setAllSubTodos}
+        task={props.taskClicked}
+        users={props.users}
+      />
+      <div className="d-flex justify-content-between">
         <h2 className="display-1 mb-3 mt-2 pr-3 text-left">
           {props.taskClicked.name}
         </h2>
@@ -94,9 +91,9 @@ function SubtaskInfos(props) {
           aria-label="Close"
           onClick={() => props.setToggleMoreInfos(false)}
         >
-        Back ⮌
+          Back ⮌
         </button>
-</div> 
+      </div>
 
       <p className="text-body text-break text-justify">
         {props.taskClicked.description}
@@ -169,9 +166,7 @@ function SubtaskInfos(props) {
       >
         Remove this task
       </button>
-      
     </>
   );
 }
-
 export default SubtaskInfos;

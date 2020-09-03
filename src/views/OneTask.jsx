@@ -3,12 +3,10 @@ import apiHandler from "../services/apiHandler";
 import OneSubTask from "../components/OneSubTask";
 import Navbar from "../components/Navbar";
 import UpdateProjectModal from "../components/UpdateProjectModal";
-import RemoveProjectModal from "../components/removeProjectModal";
-import SubTaskInfos from "../components/SubtaskInfos";
-import Comments from "../components/Comments";
+import RemoveProjectModal from "../components/RemoveProjectModal";
 import CreateTaskModal from "../components/CreateTaskModal";
 import { useHistory } from "react-router-dom";
-import { AuthContext } from "../auth/AuthContext";
+import AuthContext from "../auth/UserContext";
 
 function OneTask(props) {
   const authContext = useContext(AuthContext);
@@ -16,9 +14,10 @@ function OneTask(props) {
   const [users, setUsers] = useState(undefined);
   const [allSubTodos, setAllSubTodos] = useState(undefined);
   const [subTodos, setSubTodos] = useState(undefined);
-  const [toggleNewTask, setToggleNewTask] = useState(false);
+ // const [toggleNewTask, setToggleNewTask] = useState(false);
   const [comments, setComments] = useState([]);
   const [toggleMoreInfos, setToggleMoreInfos] = useState(false);
+
 
   const history = useHistory();
 
@@ -35,14 +34,16 @@ function OneTask(props) {
 
   useEffect(() => {
     apiHandler
-      .get("/user/users")
+      .getUsers()
       .then((apiRes) => {
-        setUsers(apiRes.data);
+        setUsers(apiRes);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
+
 
   useEffect(() => {
     apiHandler
@@ -79,9 +80,9 @@ function OneTask(props) {
     setSubTodos(res);
   }, [task, allSubTodos]);
 
-  const subTaskSubmitted = (data) => {
-    setToggleNewTask(false);
-  };
+  // const subTaskSubmitted = (data) => {
+  //   setToggleNewTask(false);
+  // };
 
   const handleProjectRemove = (task) => {
     apiHandler
@@ -102,11 +103,9 @@ function OneTask(props) {
       .catch((error) => console.log(error));
   };
 
- 
   const redirect = () => {
     history.push("/dashboard");
-    props.toggleTasks===false &&
-    props.handleCurrentProject();
+    props.toggleTasks === false && props.handleCurrentProject();
   };
 
   return (
@@ -118,24 +117,20 @@ function OneTask(props) {
             <div className="container-fluid oneProject-header mt-4 pb-2 shadow d-flex ">
               <div className="row">
                 <div className="">
-
-                <div className="titleHeader d-flex justify-content-between">
-                  
+                  <div className="titleHeader d-flex justify-content-between">
                     <div className="display-1 mb-3 mt-2 pl-3 pr-3 text-left text-break titleOneTask">
                       {task.name}
                     </div>
-  
-                    <button
-          type="button"
-          className=" btn btn-primary backButton mt-3 mr-4 mr-sm-3 mr-lg-0"
-          aria-label="Close"
-          onClick={redirect}
-        >
-        Back ⮌
-        </button>
-                   
 
-                </div> 
+                    <button
+                      type="button"
+                      className=" btn btn-primary backButton mt-3 mr-4 mr-sm-3 mr-lg-0"
+                      aria-label="Close"
+                      onClick={redirect}
+                    >
+                      Back ⮌
+                    </button>
+                  </div>
                   <div className="pl-3 pr-3">
                     <p className="text-body text-break text-justify pr-3 pr-sm-0">
                       {task.description}
@@ -186,8 +181,6 @@ function OneTask(props) {
                   handleProjectRemove={() => handleProjectRemove(task)}
                 />
               </div>
-              
-            
             </div>
           )}
 
@@ -205,15 +198,13 @@ function OneTask(props) {
             <CreateTaskModal
               users={users}
               id={props.match.params.id}
-              subTaskSubmitted={subTaskSubmitted}
+              //subTaskSubmitted={subTaskSubmitted}
               setAllSubTodos={setAllSubTodos}
             />
           </div>
 
           <div className="container-fluid oneProject-body ">
             <OneSubTask
-            setAllSubTodos={setAllSubTodos}
-              users={users}
               subTodos={subTodos}
               comments={comments}
               setToggleMoreInfos={setToggleMoreInfos}

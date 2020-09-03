@@ -31,9 +31,9 @@ function Navbar(props) {
           </div>
         </div>
         <div className="mr-3">
-        <button className="btn btn-primary" onClick={redirect}>
-          ← Back to dashboard
-        </button>
+          <button className="btn btn-primary" onClick={redirect}>
+            ← Back to dashboard
+          </button>
         </div>
       </nav>
     </div>

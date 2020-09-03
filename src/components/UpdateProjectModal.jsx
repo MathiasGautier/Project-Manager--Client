@@ -19,12 +19,12 @@ function UpdateProjectModal(props) {
       .then((data) => {
         apiHandler
           .getOneTodo(id)
-          .then((res)=>{
-            props.setTask(res)
+          .then((res) => {
+            props.setTask(res);
           })
-          .catch((error)=>{
-            console.log(error)
-          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -97,7 +97,6 @@ function UpdateProjectModal(props) {
             >
               Confirm
             </button>
-            
           </div>
         </div>
       </div>

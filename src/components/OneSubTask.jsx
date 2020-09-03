@@ -2,12 +2,10 @@ import React, { useState, useContext } from "react";
 import Comments from "../components/Comments";
 import SubTaskInfos from "../components/SubtaskInfos";
 import apiHandler from "../services/apiHandler";
-import { AuthContext } from "../auth/AuthContext";
-import ReactTooltip from "react-tooltip";
+import AuthContext from "../auth/UserContext";
 
 function OneSubTask(props) {
   const authContext = useContext(AuthContext);
-  // const [toggleMoreInfos, setToggleMoreInfos] = useState(false);
   const [taskClicked, setTaskClicked] = useState({});
 
   const toggleSubTask = (x, e) => {
@@ -46,11 +44,10 @@ function OneSubTask(props) {
         <div className="row subTaskInfos mt-4">
           <div className="container-fluid ">
             <SubTaskInfos
-           setAllSubTodos={props.setAllSubTodos}
-             users={props.users}
+              setAllSubTodos={props.setAllSubTodos}
+              users={props.users}
               setToggleMoreInfos={props.setToggleMoreInfos}
               taskClicked={taskClicked}
-              setAllSubTodos={props.setAllSubTodos}
               subTodo={props.subTodos}
               handleTaskRemove={handleTaskRemove}
             />
@@ -61,8 +58,6 @@ function OneSubTask(props) {
               setComments={props.setComments}
               users={props.users}
             />
-
-            
           </div>
         </div>
       )}
@@ -167,7 +162,6 @@ function OneSubTask(props) {
                               : "btn-info"
                           }
                           `}
-                                
                                 onClick={(e) => toggleSubTask(x, e)}
                               >
                                 {x.name}
@@ -177,8 +171,6 @@ function OneSubTask(props) {
                         })}
                   </div>
                 </div>
-
-              
               </div>
             </>
           )}
@@ -187,5 +179,4 @@ function OneSubTask(props) {
     </div>
   );
 }
-
 export default OneSubTask;

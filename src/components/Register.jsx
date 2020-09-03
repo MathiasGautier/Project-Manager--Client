@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import apiHandler from "../services/apiHandler";
-import { AuthContext } from "../auth/AuthContext";
-import { useHistory} from 'react-router-dom';
+import AuthContext from "../auth/UserContext";
+import { useHistory } from "react-router-dom";
 
 function Register(props) {
   const [user, setUser] = useState({
@@ -10,7 +10,7 @@ function Register(props) {
     role: "user",
   });
   const [message, setMessage] = useState(false);
-const history=useHistory();
+  const history = useHistory();
   const authContext = useContext(AuthContext);
   let timerID = useRef(null);
 
@@ -19,16 +19,11 @@ const history=useHistory();
       clearTimeout(timerID);
     };
   }, []);
-
- 
-
   const login = () => {
     apiHandler
       .login(user)
       .then((data) => {
-        const { isAuthenticated, user } = data;
-        authContext.setUser(user);
-        authContext.setIsAuthenticated(isAuthenticated);
+        authContext.setUser(data);
         history.push("/dashboard");
       })
       .catch((error) => {
@@ -43,7 +38,6 @@ const history=useHistory();
   const resetForm = () => {
     setUser({ username: "", password: "" });
   };
-
   const onSubmit = (e) => {
     e.preventDefault();
     apiHandler

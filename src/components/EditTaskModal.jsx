@@ -27,14 +27,13 @@ function EditTaskModal(props) {
 
   const removeUser = (x, e) => {
     e.preventDefault();
-   
+
     const workers = task.workers.filter((y) => y._id !== x._id);
     const id = task._id;
     const subTodo = { workers: workers };
     apiHandler
       .updateSubTodo(subTodo, id)
-      .then((apiRes) => {    
-      })
+      .then((apiRes) => {})
       .catch((error) => console.log(error));
   };
 

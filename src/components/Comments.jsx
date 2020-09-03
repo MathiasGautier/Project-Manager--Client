@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import RemoveComModal from "./RemoveComModal";
-import { AuthContext } from "../auth/AuthContext";
+import AuthContext from "../auth/UserContext";
 import apiHandler from "../services/apiHandler";
 
 function Comments(props) {
@@ -51,7 +51,6 @@ function Comments(props) {
   };
 
   const removeCom = () => {
-    
     apiHandler
       .deleteComment(comClicked._id)
       .then((data) => {
@@ -63,7 +62,6 @@ function Comments(props) {
           .catch((error) => {
             console.log(error);
           });
-
       })
       .catch((error) => {
         console.log(error);
@@ -97,7 +95,7 @@ function Comments(props) {
                       data-target="#removeComWarning"
                       onClick={() => setComClicked(x)}
                     >
-                       Delete
+                      Delete
                     </button>
                   </div>
                   <p className="text-justify pb-2">{x.text}</p>
@@ -108,7 +106,6 @@ function Comments(props) {
                     <p className="font-weight-bold text-right margin">
                       ↓ {x.userRef.username}
                     </p>
-
                     <button
                       className="ml-2 text-danger btn btn-sm btn-link btnRemoveOne"
                       data-toggle="modal"
@@ -144,5 +141,4 @@ function Comments(props) {
     </div>
   );
 }
-
 export default Comments;

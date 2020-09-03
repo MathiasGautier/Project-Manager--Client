@@ -34,7 +34,6 @@ function New_task(props) {
         setMessage("yes");
         timerID = setTimeout(() => {
           props.handleCurrentProject();
-          // history.push("/dashboard");
         }, 2000);
       })
       .catch((error) => {

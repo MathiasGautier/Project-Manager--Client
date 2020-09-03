@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import apiHandler from "../services/apiHandler";
-import { AuthContext } from "../auth/AuthContext";
+import AuthContext from "../auth/UserContext";
 import { NavLink } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 
@@ -137,7 +137,7 @@ function Tasks(props) {
                     )}
                 </div>
                 <div className="col">
-                  <p className="mt-3 text-right mr-1 mr-sm-4 font-weight-bold">
+                  <p className="mt-3 text-right mr-1 mr-sm-4 font-weight-bold numberOfTasks">
                     {subTodos &&
                       subTodos.filter((x) => x.todoParent_id._id === todo._id)
                         .length}{" "}
