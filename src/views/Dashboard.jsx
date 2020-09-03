@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Navbar from "../components/Navbar";
 import Tasks from "../components/Tasks";
 import NewTask from "../components/NewTask";
+import AuthContext from "../auth/UserContext";
 
 function Dashboard() {
+  const authContext = useContext(AuthContext);
+
   const [toggleTasks, setToggleTasks] = useState(true);
 
   const handleNewProject = () => {
@@ -17,6 +20,7 @@ function Dashboard() {
     <>
       <div>
         <Navbar
+        authContext={authContext}
           handleNewProject={handleNewProject}
           handleCurrentProject={handleCurrentProject}
           toggleTasks={toggleTasks}

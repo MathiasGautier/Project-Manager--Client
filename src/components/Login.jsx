@@ -34,6 +34,7 @@ function Login(props) {
         resetForm();
         timerID = setTimeout(() => {
           authContext.setUser(data);
+          
           history.push("/dashboard");
         }, 2000);
       })

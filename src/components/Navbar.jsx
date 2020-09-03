@@ -5,7 +5,8 @@ import { NavLink } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 function Navbar(props) {
-  const authContext = useContext(AuthContext);
+  
+
 
   const onClickLogoutHandled = () => {
     apiHandler.logout().then((data) => {
@@ -61,7 +62,7 @@ function Navbar(props) {
             <div className="d-md-flex d-sm-flex flex-column flex-md-row btnNav">
               <li className="nav-item">
                 <a className=" nav-link disabled userName" href=" ">
-                  Connected as {authContext.isLoggedIn && authContext.user.username}
+                  Connected as {props.authContext && props.authContext.isLoggedIn && props.authContext.user.username}
                 </a>
               </li>
               <li className="nav-item">

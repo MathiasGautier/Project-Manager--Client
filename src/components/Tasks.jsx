@@ -53,7 +53,7 @@ function Tasks(props) {
         </div>
       </div>
 
-      {todos &&
+      {(authContext.user && authContext.user._id) && todos && 
         todos.map((todo, index) => {
           return (
             <div key={index} className="mt-4 tasksTwo bg-nav shadow">

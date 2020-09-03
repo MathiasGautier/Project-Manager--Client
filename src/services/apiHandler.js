@@ -2,7 +2,7 @@ import axios from "axios";
 
 const service = axios.create({
   baseURL: process.env.REACT_APP_BACKEND_URL,
-  withCredentials: true, // Cookie is sent to client when using this service. (used for session)
+  withCredentials: true,
 });
 
 function errorHandler(error) {
