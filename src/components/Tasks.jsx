@@ -31,6 +31,21 @@ function Tasks(props) {
       });
   }, []);
 
+  const numberOfTasks = (str, todo) =>
+    subTodos &&
+    subTodos.filter((x) => x.todoParent_id._id === todo._id && x.status === str)
+      .length;
+
+  const completion = (subTodos, todo, str) =>
+    subTodos &&
+    (
+      (subTodos.filter(
+        (x) => x.todoParent_id._id === todo._id && x.status === "Done"
+      ).length /
+        subTodos.filter((x) => x.todoParent_id._id === todo._id).length) *
+      100
+    ).toFixed(0) + str;
+
   return (
     <div className="container-fluid tasks">
       <div className="d-md-flex justify-content-between mt-3 align-items-center">
@@ -53,15 +68,17 @@ function Tasks(props) {
         </div>
       </div>
 
-      {(authContext.user && authContext.user._id) && todos && 
+      {authContext.user &&
+        authContext.user._id &&
+        todos &&
         todos.map((todo, index) => {
           return (
             <div key={index} className="mt-4 tasksTwo bg-nav shadow">
               <ReactTooltip effect="solid" />
               <div className="card-head">
-                <div className="col">
+                <div className="col numberOfTasks">
                   <div className="d-sm-flex">
-                    <div className="ml-sm-0 cardheadText">
+                    <div className="ml-sm-0 cardheadText ">
                       <div className="ml-sm-0 text-break">
                         <NavLink
                           className="nav-link title"
@@ -100,7 +117,7 @@ function Tasks(props) {
                       )}
                     </div>
                   </div>
-
+                  {/* If the use has unfinished task assigned */}
                   {subTodos &&
                     subTodos
                       .filter(
@@ -136,45 +153,24 @@ function Tasks(props) {
                       </p>
                     )}
                 </div>
-                <div className="col">
-                  <p className="mt-3 text-right mr-1 mr-sm-4 font-weight-bold numberOfTasks">
+                <>
+                  <p className="mt-3 text-right mr-1 mr-sm-4 font-weight-bold colNumberofTasks">
                     {subTodos &&
                       subTodos.filter((x) => x.todoParent_id._id === todo._id)
                         .length}{" "}
                     tasks
                   </p>
-                </div>
+                </>
               </div>
-
-              {/* //REFACTOR THIS PART : // */}
 
               <div className="d-flex justify-content-around mt-2">
+                <p className="pl-3">To do: {numberOfTasks("To Do", todo)}</p>
                 <p className="pl-3">
-                  To do:{" "}
-                  {subTodos &&
-                    subTodos.filter(
-                      (x) =>
-                        x.todoParent_id._id === todo._id && x.status === "To Do"
-                    ).length}
+                  In Progress: {numberOfTasks("In Progress", todo)}
                 </p>
-                <p className="pl-3">
-                  In Progress:{" "}
-                  {subTodos &&
-                    subTodos.filter(
-                      (x) =>
-                        x.todoParent_id._id === todo._id &&
-                        x.status === "In Progress"
-                    ).length}
-                </p>
-                <p className="pl-3">
-                  Completed:{" "}
-                  {subTodos &&
-                    subTodos.filter(
-                      (x) =>
-                        x.todoParent_id._id === todo._id && x.status === "Done"
-                    ).length}
-                </p>
+                <p className="pl-3">Completed: {numberOfTasks("Done", todo)}</p>
               </div>
+
               <div className="text-center mb-2 font-weight-bold">
                 {subTodos &&
                   (subTodos.filter(
@@ -185,17 +181,7 @@ function Tasks(props) {
                         x.status === "To Do")
                   ).length === 0
                     ? "No task yet"
-                    : (
-                        (subTodos.filter(
-                          (x) =>
-                            x.todoParent_id._id === todo._id &&
-                            x.status === "Done"
-                        ).length /
-                          subTodos.filter(
-                            (x) => x.todoParent_id._id === todo._id
-                          ).length) *
-                        100
-                      ).toFixed(0) + "% complete")}
+                    : completion(subTodos, todo, "% complete"))}
               </div>
 
               <div className="pl-3">
@@ -204,35 +190,9 @@ function Tasks(props) {
                     className="progress-bar progress-bar-striped bg-success"
                     role="progressbar"
                     style={{
-                      width: `${
-                        subTodos &&
-                        (
-                          (subTodos.filter(
-                            (x) =>
-                              x.todoParent_id._id === todo._id &&
-                              x.status === "Done"
-                          ).length /
-                            subTodos.filter(
-                              (x) => x.todoParent_id._id === todo._id
-                            ).length) *
-                          100
-                        ).toFixed() + "%"
-                      }`,
+                      width: `${completion(subTodos, todo, "%")}`,
                     }}
-                    aria-valuenow={
-                      subTodos &&
-                      (
-                        (subTodos.filter(
-                          (x) =>
-                            x.todoParent_id._id === todo._id &&
-                            x.status === "Done"
-                        ).length /
-                          subTodos.filter(
-                            (x) => x.todoParent_id._id === todo._id
-                          ).length) *
-                        100
-                      ).toFixed() + "%"
-                    }
+                    aria-valuenow={completion(subTodos, todo, "%")}
                     aria-valuemin="0"
                     aria-valuemax="100"
                   ></div>

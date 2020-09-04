@@ -4,7 +4,7 @@ function Footer() {
   return (
     <footer className="footer">
       <p className="text-center footerUp">Created by Mathias Gautier. </p>
-      <div className="text-center">
+      <div className="text-center footerFlex">
         <a href="https://github.com/mathiasgautier" className="mr-2">
           Gitgub
         </a>

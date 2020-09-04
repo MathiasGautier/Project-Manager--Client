@@ -1,0 +1,24 @@
+------Landing-----
+       |          |
+    Register    Login
+           |   |
+        Dashboard+Navbar
+        |           |
+    Tasks          NewTask
+    |
+    -------OneTask------------
+           |                 |
+     OneSubTask      UpdateProjectModal          
+        |            CreateTaskModal
+        |            RemoveProjectModal
+        |
+    -----------------------------------  
+    |                                 |
+ SubTaskInfos                      Comments
+    |                                  | 
+    |                                  |
+    --------------------               |
+    |                   |              |
+ RemoveTaskModal    EditTaskModal      |
+                                       |
+                                RemoveComModal

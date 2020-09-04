@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import apiHandler from "../services/apiHandler";
 
 function EditTaskModal(props) {
   const [title, setTitle] = useState("");
   const [descr, setDescription] = useState("");
-  const [workersId, setWorkers] = useState([]);
-  const [workerNames, setWorkerNames] = useState([]);
+
+  const [newWorkers, setWorkers] = useState();
+  const [userSelection, setUserSelection] = useState();
 
   const task = props.task;
+  const usernames = props.users.map((x) => x.username);
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -16,25 +18,69 @@ function EditTaskModal(props) {
     setDescription(e.target.value);
   };
 
-  const onChangeWorkers = (e) => {
-    const userId = e.target.value;
-    const user = props.users.find((u) => u._id === userId);
-    const oneUserId = user._id;
-    const oneUserName = user.username;
-    setWorkers([...workersId, oneUserId]);
-    setWorkerNames([...workerNames, oneUserName]);
-  };
+  useEffect(() => {
+    setTitle(task.name);
+    setDescription(task.description);
+    let workersArray = [task.workers];
+    setWorkers(workersArray);
+    let workerNames = task.workers.map((x) => x.username);
+    const usernames = props.users.map((x) => x.username);
+    let optionsArray = usernames.filter((e) => !workerNames.includes(e));
+    setUserSelection(optionsArray);
+  }, [task.workers, props.users, task.description, task.name]);
 
   const removeUser = (x, e) => {
-    e.preventDefault();
+    let name = x.username;
+    setWorkers(newWorkers.map((x) => x.filter((x) => x.username !== name)));
+    let res = userSelection.concat(name);
+    setUserSelection(res);
+  };
 
-    const workers = task.workers.filter((y) => y._id !== x._id);
-    const id = task._id;
-    const subTodo = { workers: workers };
+  const onChangeWorkers = (e) => {
+    let currentWorkers = newWorkers.map((x) => x.map((x) => x));
+    let user = props.users.find((u) => u.username === e.target.value);
+    let alreadyHere;
+    newWorkers.map((x) =>
+      x.filter((x) => x.username === user.username).length === 0
+        ? (alreadyHere = false)
+        : (alreadyHere = true)
+    );
+    !alreadyHere && currentWorkers.map((x) => x.push(user));
+    setWorkers(currentWorkers);
+
+    let workerNames = currentWorkers.map((x) => x.map((x) => x.username))[0];
+
+    let optionsArray = usernames.filter((e) => !workerNames.includes(e));
+
+    setUserSelection(optionsArray);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const description = descr;
+    const name = title;
+    const workers = newWorkers[0];
+    const todoParent_id = task.todoParent_id._id;
+    const _id = task._id;
+    const subTodo = { name, description, workers, todoParent_id };
+    const newSubTodo={name, description, workers, todoParent_id, _id}
     apiHandler
-      .updateSubTodo(subTodo, id)
-      .then((apiRes) => {})
-      .catch((error) => console.log(error));
+      .updateSubTodo(subTodo, task._id)
+      .then((data) => {
+       
+        props.modified(newSubTodo);
+        apiHandler
+          .getSubtodos()
+          .then((data) => {
+            props.setAllSubTodos(data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -62,8 +108,9 @@ function EditTaskModal(props) {
               <input
                 type="text"
                 name="name"
+                value={title}
                 className="form-control"
-                placeholder={task.name}
+                placeholder={title}
                 onChange={onChangeTitle}
               />
 
@@ -74,25 +121,30 @@ function EditTaskModal(props) {
                 type="text"
                 name="name"
                 className="form-control"
-                placeholder={task.description}
+                value={descr}
+                placeholder={descr}
                 onChange={onChangeDescritpion}
               />
 
               <p className="mt-2">Current Users :</p>
-
-              {task.workers &&
-                task.workers.map((x, i) => (
-                  <div className="mr-1 d-flex" key={i}>
-                    {" "}
-                    {x.username}
-                    <button
-                      className="btn btn-link text-danger p-0 ml-1"
-                      onClick={(e) => removeUser(x, e)}
-                    >
-                      Remove
-                    </button>
-                  </div>
-                ))}
+              {newWorkers && newWorkers[0].length === 0 && (
+                <p className="text-danger">You must add at least one user</p>
+              )}
+              {newWorkers &&
+                newWorkers.map((users) =>
+                  users.map((x, i) => (
+                    <div className="mr-1 d-flex" key={i}>
+                      {" "}
+                      {x.username}
+                      <button
+                        className="btn btn-link text-danger p-0 ml-1"
+                        onClick={(e) => removeUser(x, e)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))
+                )}
 
               <label htmlFor="project-description" className="mr-sm-2 mt-2">
                 Select users :
@@ -105,22 +157,15 @@ function EditTaskModal(props) {
                 onChange={onChangeWorkers}
               >
                 <option defaultValue>Choose a user</option>
-                {props.users &&
-                  props.users.map((item, index) => {
+                {userSelection &&
+                  userSelection.map((user, index) => {
                     return (
-                      <option value={item._id} key={index}>
-                        {item.username}
+                      <option value={user} key={index}>
+                        {user}
                       </option>
                     );
                   })}
               </select>
-
-              <div className="containe ml-3">
-                {workerNames &&
-                  [...new Set(workerNames)].map((name, index) => (
-                    <div key={index}>{name}</div>
-                  ))}
-              </div>
             </form>
           </div>
           <div className="modal-footer justify-content-center">
@@ -135,7 +180,7 @@ function EditTaskModal(props) {
               type="submit"
               className="btn btn-danger"
               data-dismiss="modal"
-              //   onClick={onSubmit}
+              onClick={onSubmit}
             >
               Confirm
             </button>

@@ -5,9 +5,21 @@ import EditTaskModal from "./EditTaskModal";
 
 function SubtaskInfos(props) {
   const [status, setStatus] = useState(undefined);
+  const [taskClicked, setTaskClicked]=useState(undefined)
+  
+  const modified=((e)=>{
+    setTaskClicked(e)
+  })
 
-  const id = props.taskClicked._id;
+  useEffect(()=>{
+    setTaskClicked(props.taskClicked)
+  },[props.taskClicked])
+
+  const id = taskClicked && taskClicked._id;
+
+  
   useEffect(() => {
+    id &&
     apiHandler
       .getOneSubTodo(id)
       .then((data) => {
@@ -16,7 +28,9 @@ function SubtaskInfos(props) {
       .catch((error) => {
         console.log(error);
       });
-  });
+  },[id]);
+
+
 
   const setToDo = () => {
     const subTodo = { status: "To Do" };
@@ -27,6 +41,7 @@ function SubtaskInfos(props) {
           .getSubtodos()
           .then((data) => {
             props.setAllSubTodos(data);
+            setStatus('To Do')
           })
           .catch((error) => {
             console.log(error);
@@ -44,6 +59,7 @@ function SubtaskInfos(props) {
           .getSubtodos()
           .then((data) => {
             props.setAllSubTodos(data);
+            setStatus('In Progress')
           })
           .catch((error) => {
             console.log(error);
@@ -61,6 +77,7 @@ function SubtaskInfos(props) {
           .getSubtodos()
           .then((data) => {
             props.setAllSubTodos(data);
+            setStatus('Done')
           })
           .catch((error) => {
             console.log(error);
@@ -79,10 +96,11 @@ function SubtaskInfos(props) {
         setAllSubTodos={props.setAllSubTodos}
         task={props.taskClicked}
         users={props.users}
+        modified={modified}
       />
       <div className="d-flex justify-content-between">
         <h2 className="display-1 mb-3 mt-2 pr-3 text-left">
-          {props.taskClicked.name}
+          {taskClicked?.name}
         </h2>
 
         <button
@@ -96,7 +114,7 @@ function SubtaskInfos(props) {
       </div>
 
       <p className="text-body text-break text-justify">
-        {props.taskClicked.description}
+        {taskClicked?.description}
       </p>
 
       <p className="text-primary">Click on a button to change the status.</p>
@@ -141,8 +159,8 @@ function SubtaskInfos(props) {
 
         <div className="d-flex flex-wrap ">
           <div className="mr-1">|</div>
-          {props.taskClicked.workers &&
-            props.taskClicked.workers.map((x, i) => (
+          {taskClicked?.workers &&
+            taskClicked.workers.map((x, i) => (
               <div className="mr-1" key={i}>
                 {" "}
                 {x.username} |

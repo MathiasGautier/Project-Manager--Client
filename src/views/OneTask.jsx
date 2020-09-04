@@ -14,7 +14,6 @@ function OneTask(props) {
   const [users, setUsers] = useState(undefined);
   const [allSubTodos, setAllSubTodos] = useState(undefined);
   const [subTodos, setSubTodos] = useState(undefined);
-  // const [toggleNewTask, setToggleNewTask] = useState(false);
   const [comments, setComments] = useState([]);
   const [toggleMoreInfos, setToggleMoreInfos] = useState(false);
 

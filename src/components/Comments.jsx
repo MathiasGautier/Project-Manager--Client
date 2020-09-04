@@ -23,7 +23,7 @@ function Comments(props) {
 
     apiHandler
       .postComment(comment)
-      .then((data) => {
+      .then(() => {
         clearNewComment();
         apiHandler
           .getComments()
@@ -53,7 +53,7 @@ function Comments(props) {
   const removeCom = () => {
     apiHandler
       .deleteComment(comClicked._id)
-      .then((data) => {
+      .then(() => {
         apiHandler
           .getComments()
           .then((data) => {
@@ -102,8 +102,9 @@ function Comments(props) {
                 </>
               ) : (
                 <>
-                  <div className="d-flex">
-                    <p className="font-weight-bold text-right margin">
+                  <div className="d-flex justify-content-end">
+                  
+                    <p className="font-weight-bold margin">
                       ↓ {x.userRef.username}
                     </p>
                     <button

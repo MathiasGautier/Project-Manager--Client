@@ -64,10 +64,6 @@ h3 {
     padding-bottom: 15px;
 }
 
-.unfinishedTaskText {
-    width: 70vw;
-}
-
 .card-head {
     border-top-left-radius: 7px;
     background-color: #bfdbf0;
@@ -75,10 +71,12 @@ h3 {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
-.subTaskInfos{
+
+.subTaskInfos {
     border-radius: 7px;
     background-color: #bfdbf0;
 }
+
 .oneProject-header {
     background-color: #bfdbf0;
     border-radius: 7px;
@@ -94,20 +92,24 @@ h3 {
     background-color: #bfdbf0;
     box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
 }
-.bgCom{
+
+.bgCom {
     background-color: #7ebbeb79;
-    border-radius:7px;
-    margin-right:40px;
+    border-radius: 7px;
+    margin-right: 40px;
 }
-.margin{
-    margin-bottom:-2px;
-    border-radius:5px;
+
+.margin {
+    margin-bottom: -2px;
+    border-radius: 5px;
 }
-.bgComTwo{
-    background-color: #2783c979; 
-    border-radius:7px;
-    margin-left:40px;
+
+.bgComTwo {
+    background-color: #2783c979;
+    border-radius: 7px;
+    margin-left: 40px;
 }
+
 .toDoCol {
     background-color: #e3f2fd;
     border-bottom-left-radius: 7px;
@@ -130,32 +132,31 @@ h3 {
     position: relative;
     right: 8px;
 }
-.backButton{
-    height:2.5em;
-    width:35%;
+
+.backButton {
+    height: 2.5em;
+    width: 35%;
 }
-.titleHeader{
-    width:95vw;
+
+.titleHeader {
+    width: 95vw;
 }
-.btnRemoveOne{
-    position:relative;
-    bottom:2px;
+
+.btnRemoveOne {
+    position: relative;
+    bottom: 2px;
 }
-.footer{
-    // height:50px;
-    // position:relative;
-    // bottom:0;
-    // width:100%;
-    // height:60px;
-}
-.footerUp{
-    margin-top:30px;
+
+.footerUp {
+    margin-top: 30px;
     // margin:-4px;
-    margin-bottom:-3px;
+    margin-bottom: -3px;
 }
-.titleOneTask{
-    width:60%;
+
+.titleOneTask {
+    width: 60%;
 }
+
 @media(min-width:840px) {
     .navInfos {
         width: 65vw;
@@ -174,10 +175,11 @@ h3 {
         height: 90px;
         font-size: 1.2em;
     }
-    
-    .comButton{
-        width:300px;
+
+    .comButton {
+        width: 300px;
     }
+
     .logout {
         position: relative;
         bottom: 10px;
@@ -209,24 +211,40 @@ h3 {
     // }
 }
 
+@media (max-width:777px) {
+    // .numberOfTasks{
+    //     background-color:red;
+    //     width:80px;
+    //     position:relative;
+    //     right:45px;
+    // }
+}
 
 @media (max-width: 576px) {
+    .numberOfTasks {
+        width: 90%;
+    }
+
     .cardheadText {
         width: 60vw;
     }
-   
+
     .navBar {
         font-size: 1.1em;
     }
-    .comButton{
-        width:100%;
+
+    .comButton {
+        width: 100%;
     }
-    .backButton{
-        width:50%;
+
+    .backButton {
+        width: 50%;
     }
-.buttons{
-    width:45%;
-}
+
+    .buttons {
+        width: 45%;
+    }
+
     .toggleNav {
         position: relative;
         right: 10px;
@@ -243,55 +261,95 @@ h3 {
     }
 }
 
+@media(max-width:528px) {
+    .numberOfTasks {
+        width: 80%;
+    }
+
+    // .colNumberofTasks{
+    //     position:relative;
+    //     right:500px;
+    //  width:80px;
+    //    background-color:red;
+    // }
+}
+
 @media(max-width:483px) {
     .status {
         font-size: 1.2em;
     }
 }
+
+@media(max-width:459px) {
+    .numberOfTasks {
+        width: 80%;
+    }
+
+    .colNumberofTasks {
+        position: relative;
+        right: 30px;
+    }
+}
+
 @media(max-width:411px) {
     .status {
         font-size: 0.9em;
     }
 
-@media(max-width:338px) {
+    @media(max-width:338px) {
         .status {
             font-size: 0.82em;
         }
     }
-@media(max-width:393px){
-    .buttons{
-        width:95%;
+
+    @media(max-width:393px) {
+        .buttons {
+            width: 95%;
+        }
+
+        .btnRemove {
+            width: 100%;
+        }
     }
-    .btnRemove{
-        width:100%;
+
+    @media(max-width:359px) {
+        .toggleNav {
+            position: relative;
+            left: 225px;
+            bottom: 75px;
+        }
+
+        .navBarHeader {
+            position: relative;
+            right: 25px;
+        }
+
+        .navbarLogo {
+            position: relative;
+            right: 10px;
+        }
+
+        .colNumberofTasks {
+            width: 65px;
+        }
     }
-}
-@media(max-width:359px){
-    .toggleNav{
-        position:relative;
-        left:225px;
-        bottom:75px;
+
+    @media(max-width:312px) {
+        .footerFlex {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .toggleNav {
+            position: relative;
+            top: 0px;
+            left: 0px;
+        }
     }
-    .navBarHeader{
-        position:relative;
-        right:25px;
+    @media(max-width:299px){
+        .colNumberofTasks {
+            position:relative;
+            right:50px;
+      }
     }
-    .navbarLogo{
-        position:relative;
-        right:10px;
-    }
-    .numberOfTasks{
-        position:relative;
-        right:23px;
-    }
-  
-   
-}
-@media(max-width:312px){
-    .toggleNav{
-     position:relative;
-     top:0px;
-     left:0px;
-    }
-}
 }
