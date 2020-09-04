@@ -30,6 +30,7 @@ function EditTaskModal(props) {
   }, [task.workers, props.users, task.description, task.name]);
 
   const removeUser = (x, e) => {
+    e.preventDefault();
     let name = x.username;
     setWorkers(newWorkers.map((x) => x.filter((x) => x.username !== name)));
     let res = userSelection.concat(name);
