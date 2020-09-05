@@ -3,18 +3,23 @@ import Navbar from "../components/Navbar";
 import Tasks from "../components/Tasks";
 import NewTask from "../components/NewTask";
 import AuthContext from "../auth/UserContext";
+import { Redirect, } from "react-router-dom";
+
 
 function Dashboard() {
   const authContext = useContext(AuthContext);
-
+  
   const [toggleTasks, setToggleTasks] = useState(true);
-
+  
   const handleNewProject = () => {
     setToggleTasks(false);
   };
   const handleCurrentProject = () => {
     setToggleTasks(true);
   };
+  
+  if (authContext.isLoading===false && authContext.isLoggedIn === false) {return <Redirect to="/" /> }
+
 
   return (
     <>

@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import apiHandler from "../services/apiHandler";
-import AuthContext from "../auth/UserContext";
 import { NavLink } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 

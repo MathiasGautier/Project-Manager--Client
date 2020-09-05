@@ -78,7 +78,7 @@ function OneSubTask(props) {
                 </p>
               </div>
               <div>
-                <div className="row">
+                <div className="row progressRow">
                   <div className="col toDoCol text-center pb-3">
                     <h2 className="mt-2 status"> To Do</h2>
                     {props.subTodos &&

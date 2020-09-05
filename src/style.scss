@@ -91,6 +91,8 @@ h3 {
 .progressCol {
     background-color: #bfdbf0;
     box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    
+    width:150px;
 }
 
 .bgCom {
@@ -111,17 +113,19 @@ h3 {
 }
 
 .toDoCol {
-    background-color: #e3f2fd;
+    background-color: #2783c979;
     border-bottom-left-radius: 7px;
     border-top-left-radius: 7px;
     box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    width:150px;
 }
 
 .doneCol {
-    background-color: #e3f2fd;
+    background-color: #2783c979;
     border-bottom-right-radius: 7px;
     border-top-right-radius: 7px;
     box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    width:150px;
 }
 
 .display-1 {
@@ -149,12 +153,15 @@ h3 {
 
 .footerUp {
     margin-top: 30px;
-    // margin:-4px;
     margin-bottom: -3px;
 }
 
 .titleOneTask {
-    width: 60%;
+    width: 62%;
+}
+.titleTaskInfo{
+    max-width:73%;
+    overflow-wrap: break-word;
 }
 
 @media(min-width:840px) {
@@ -265,13 +272,6 @@ h3 {
     .numberOfTasks {
         width: 80%;
     }
-
-    // .colNumberofTasks{
-    //     position:relative;
-    //     right:500px;
-    //  width:80px;
-    //    background-color:red;
-    // }
 }
 
 @media(max-width:483px) {
@@ -290,10 +290,34 @@ h3 {
         right: 30px;
     }
 }
+@media(max-width:440px){
+    .progressRow{
+    display:flex;
+    flex-direction:column;
+  
+}
+.toDoCol{
+    width:100%;
+    border-radius:7px;
+    margin-bottom:7px;
+}
+.doneCol{
+    width:100%;
+    border-radius:7px;
+}
+.progressCol{
+    width:100%;
+    border-radius:7px;
+    margin-bottom:7px;
+}
+}
 
-@media(max-width:411px) {
+@media(max-width:800px) {
     .status {
         font-size: 0.9em;
+    }
+    .backButton {
+        width: 30%;
     }
 
     @media(max-width:338px) {
@@ -318,7 +342,7 @@ h3 {
             left: 225px;
             bottom: 75px;
         }
-
+      
         .navBarHeader {
             position: relative;
             right: 25px;
@@ -352,4 +376,10 @@ h3 {
             right:50px;
       }
     }
+    @media(max-width:346px){
+        .backArrow{
+            display:none;
+        }
+    }
+  
 }

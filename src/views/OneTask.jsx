@@ -2,11 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import apiHandler from "../services/apiHandler";
 import OneSubTask from "../components/OneSubTask";
 import Navbar from "../components/Navbar";
-import UpdateProjectModal from "../components/UpdateProjectModal";
-import RemoveProjectModal from "../components/RemoveProjectModal";
-import CreateTaskModal from "../components/CreateTaskModal";
+import EditProjectModal from "../components/modals/EditProjectModal";
+import RemoveProjectModal from "../components/modals/RemoveProjectModal";
+import CreateTaskModal from "../components/modals/CreateTaskModal";
 import { useHistory } from "react-router-dom";
 import AuthContext from "../auth/UserContext";
+import { Redirect, } from "react-router-dom";
 
 function OneTask(props) {
   const authContext = useContext(AuthContext);
@@ -18,6 +19,7 @@ function OneTask(props) {
   const [toggleMoreInfos, setToggleMoreInfos] = useState(false);
 
   const history = useHistory();
+  
 
   useEffect(() => {
     apiHandler
@@ -76,9 +78,6 @@ function OneTask(props) {
     setSubTodos(res);
   }, [task, allSubTodos]);
 
-  // const subTaskSubmitted = (data) => {
-  //   setToggleNewTask(false);
-  // };
 
   const handleProjectRemove = (task) => {
     apiHandler
@@ -104,6 +103,8 @@ function OneTask(props) {
     props.toggleTasks === false && props.handleCurrentProject();
   };
 
+  if (authContext.isLoading===false && authContext.isLoggedIn === false) {return <Redirect to="/" /> }
+
   return (
     <div>
       <div>
@@ -124,7 +125,7 @@ function OneTask(props) {
                       aria-label="Close"
                       onClick={redirect}
                     >
-                      Back ⮌
+                      <p><span className="backArrow">Back</span> ⮌</p>
                     </button>
                   </div>
                   <div className="pl-3 pr-3">
@@ -167,7 +168,7 @@ function OneTask(props) {
                   )}
                 </div>
 
-                <UpdateProjectModal
+                <EditProjectModal
                   projectId={props.match.params.id}
                   setTask={setTask}
                   task={task}

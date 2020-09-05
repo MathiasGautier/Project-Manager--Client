@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import apiHandler from "../services/apiHandler";
-import RemoveTaskModal from "./RemoveTaskModal";
-import EditTaskModal from "./EditTaskModal";
+import RemoveTaskModal from "./modals/RemoveTaskModal";
+import EditTaskModal from "./modals/EditTaskModal";
 
 function SubtaskInfos(props) {
   const [status, setStatus] = useState(undefined);
@@ -99,7 +99,7 @@ function SubtaskInfos(props) {
         modified={modified}
       />
       <div className="d-flex justify-content-between">
-        <h2 className="display-1 mb-3 mt-2 pr-3 text-left">
+        <h2 className="display-1 mb-3 mt-2 pr-3 text-left titleTaskInfo">
           {taskClicked?.name}
         </h2>
 
@@ -109,7 +109,7 @@ function SubtaskInfos(props) {
           aria-label="Close"
           onClick={() => props.setToggleMoreInfos(false)}
         >
-          Back ⮌
+         <p><span className="backArrow">Back</span> ⮌</p> 
         </button>
       </div>
 

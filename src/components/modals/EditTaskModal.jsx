@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import apiHandler from "../services/apiHandler";
+import apiHandler from "../../services/apiHandler";
 
 function EditTaskModal(props) {
   const [title, setTitle] = useState("");

@@ -6,8 +6,6 @@ import Dashboard from "./views/Dashboard";
 import "./style.scss";
 import Footer from "./components/Footer.jsx";
 import Register from "./components/Register";
-
-// import 'bootstrap/dist/css/bootstrap.css';
 import "jquery/dist/jquery";
 import "bootstrap/dist/js/bootstrap";
 import "popper.js";

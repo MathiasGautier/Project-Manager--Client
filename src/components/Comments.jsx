@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import RemoveComModal from "./RemoveComModal";
+import RemoveComModal from "./modals/RemoveComModal";
 import AuthContext from "../auth/UserContext";
 import apiHandler from "../services/apiHandler";
 

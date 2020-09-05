@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import apiHandler from "../services/apiHandler";
+import apiHandler from "../../services/apiHandler";
 
-function UpdateProjectModal(props) {
+function EditProjectModal(props) {
   const [name, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const onSubmit = () => {
@@ -104,4 +104,4 @@ function UpdateProjectModal(props) {
   );
 }
 
-export default UpdateProjectModal;
+export default EditProjectModal;
