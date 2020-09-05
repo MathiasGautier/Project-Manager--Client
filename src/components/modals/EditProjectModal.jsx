@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import apiHandler from "../../services/apiHandler";
 
 function EditProjectModal(props) {
   const [name, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  useEffect(()=>{
+    setTitle(props.task.name);
+    setDescription(props.task.description)
+  },[props.task.description, props.task.name])
+console.log(name)
+
   const onSubmit = () => {
     let todoUpdate;
     let id = props.projectId;
@@ -65,7 +72,8 @@ function EditProjectModal(props) {
                 type="text"
                 name="name"
                 className="form-control"
-                placeholder={props.task.name}
+                value={name}
+                placeholder={name}
                 onChange={titleChange}
               />
 
@@ -76,7 +84,8 @@ function EditProjectModal(props) {
                 type="text"
                 name="name"
                 className="form-control"
-                placeholder={props.task.description}
+                value={description}
+                placeholder={description}
                 onChange={descriptionChange}
               />
             </form>
