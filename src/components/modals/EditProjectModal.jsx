@@ -73,7 +73,7 @@ function EditProjectModal(props) {
                 name="name"
                 className="form-control"
                 value={name}
-                placeholder={name}
+                placeholder="Title"
                 onChange={titleChange}
               />
 
@@ -85,7 +85,7 @@ function EditProjectModal(props) {
                 name="name"
                 className="form-control"
                 value={description}
-                placeholder={description}
+                placeholder="Description"
                 onChange={descriptionChange}
               />
             </form>
