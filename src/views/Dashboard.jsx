@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import Navbar from "../components/Navbar";
 import Tasks from "../components/Tasks";
-import NewTask from "../components/NewTask";
+import NewProject from "../components/NewProject";
 import AuthContext from "../auth/UserContext";
 import { Redirect, } from "react-router-dom";
 
@@ -34,7 +34,7 @@ function Dashboard() {
           <Tasks handleNewProject={handleNewProject} />
         ) : (
           <div className="container mt-5">
-            <NewTask handleCurrentProject={handleCurrentProject} />
+            <NewProject handleCurrentProject={handleCurrentProject} />
           </div>
         )}
       </div>

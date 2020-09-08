@@ -64,11 +64,10 @@ function EditTaskModal(props) {
     const todoParent_id = task.todoParent_id._id;
     const _id = task._id;
     const subTodo = { name, description, workers, todoParent_id };
-    const newSubTodo={name, description, workers, todoParent_id, _id}
+    const newSubTodo = { name, description, workers, todoParent_id, _id };
     apiHandler
       .updateSubTodo(subTodo, task._id)
       .then((data) => {
-       
         props.modified(newSubTodo);
         apiHandler
           .getSubtodos()

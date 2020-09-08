@@ -195,7 +195,7 @@ function OneTask(props) {
             <CreateTaskModal
               users={users}
               id={props.match.params.id}
-              //subTaskSubmitted={subTaskSubmitted}
+             // subTaskSubmitted={subTaskSubmitted}
               setAllSubTodos={setAllSubTodos}
             />
           </div>

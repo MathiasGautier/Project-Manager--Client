@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import apiHandler from "../services/apiHandler";
 
-function New_task(props) {
+function NewProject(props) {
   const [task, setTask] = useState({
     name: "",
     description: "",
   });
+
 
   const [message, setMessage] = useState(false);
 
@@ -100,4 +101,4 @@ function New_task(props) {
   );
 }
 
-export default New_task;
+export default NewProject;

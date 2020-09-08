@@ -9,7 +9,7 @@ function EditProjectModal(props) {
     setTitle(props.task.name);
     setDescription(props.task.description)
   },[props.task.description, props.task.name])
-console.log(name)
+
 
   const onSubmit = () => {
     let todoUpdate;

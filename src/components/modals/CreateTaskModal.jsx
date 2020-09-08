@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import apiHandler from "../../services/apiHandler";
 
 function CreateTaskModal(props) {
   const [title, setTitle] = useState("");
   const [descr, setDescription] = useState("");
-  const [workersId, setWorkers] = useState([]);
-  const [workerNames, setWorkerNames] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [newWorkers, setNewWorkers] = useState([]);
+
+  useEffect(() => {
+    setUsers(props.users && props.users.map((x) => x.username));
+  }, [props.users]);
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -15,20 +19,24 @@ function CreateTaskModal(props) {
   };
 
   const onChangeWorkers = (e) => {
-    const userId = e.target.value;
-    const user = props.users.find((u) => u._id === userId);
-    const oneUserId = user._id;
-    const oneUserName = user.username;
-    setWorkers([...workersId, oneUserId]);
-    setWorkerNames([...workerNames, oneUserName]);
+    setNewWorkers([...newWorkers, e.target.value]);
+    setUsers(users.filter((x) => x !== e.target.value));
+  };
+
+  const removeUser = (name, e) => {
+    e.preventDefault();
+    setNewWorkers(newWorkers.filter((x) => x !== name));
+    setUsers([...users, name]);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     const name = title;
     const description = descr;
-    const workers = [...new Set(workersId)];
     const todoParent_id = props.id;
+    const workers = props.users
+      .filter((x) => newWorkers.includes(x.username))
+      .map((x) => x._id);
     const subTodo = { name, description, workers, todoParent_id };
 
     workers.length === 0
@@ -37,7 +45,6 @@ function CreateTaskModal(props) {
           .postSubTodo(subTodo)
           .then((data) => {
             resetForm();
-            //props.subTaskSubmitted(data);
             apiHandler
               .getSubtodos()
               .then((data) => {
@@ -55,8 +62,8 @@ function CreateTaskModal(props) {
   const resetForm = () => {
     setTitle("");
     setDescription("");
-    setWorkerNames([]);
-    setWorkers([]);
+    setNewWorkers([]);
+    setUsers(props.users && props.users.map((x) => x.username));
   };
 
   return (
@@ -117,11 +124,11 @@ function CreateTaskModal(props) {
                 onChange={onChangeWorkers}
               >
                 <option defaultValue>Choose a user</option>
-                {props.users &&
-                  props.users.map((item, index) => {
+                {users &&
+                  users.map((item, index) => {
                     return (
-                      <option value={item._id} key={index}>
-                        {item.username}
+                      <option value={item} key={index}>
+                        {item}
                       </option>
                     );
                   })}
@@ -129,9 +136,17 @@ function CreateTaskModal(props) {
             </div>
 
             <div className="containe ml-3">
-              {workerNames &&
-                [...new Set(workerNames)].map((name, index) => (
-                  <div key={index}>{name}</div>
+              {newWorkers &&
+                newWorkers.map((name, index) => (
+                  <div key={index}>
+                    {name}
+                    <button
+                      className="btn btn-link text-danger p-0 ml-1 mb-1"
+                      onClick={(e) => removeUser(name, e)}
+                    >
+                      Remove
+                    </button>
+                  </div>
                 ))}
             </div>
 
@@ -144,8 +159,9 @@ function CreateTaskModal(props) {
                 Cancel
               </button>
               <button
+                type="submit"
                 className="btn btn-danger"
-                data-dismiss={title && descr && workersId.length > 0 && "modal"}
+                data-dismiss="modal"
                 onClick={onSubmit}
               >
                 Confirm
